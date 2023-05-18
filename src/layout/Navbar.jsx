@@ -1,13 +1,11 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
-import { useFavorite } from "../contexts/FavoriteContext";
 import ActiveLink from "../components/ActiveLink";
 
 const Navbar = () => {
   const { currentUser, logout } = useAuth();
   const { displayName, photoURL } = currentUser || {};
-  const { favorites } = useFavorite();
   return (
     <header className="shadow-sm">
       <div className="container px-5 py-2 md:py-3 md:px-20 mx-auto">

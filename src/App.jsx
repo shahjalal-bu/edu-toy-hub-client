@@ -1,20 +1,21 @@
 import { RouterProvider } from "react-router-dom";
 import routes from "./routes/routes";
 import { AuthProvider } from "./contexts/AuthContext";
-import { FavoriteProvider } from "./contexts/FavoriteContext";
+import { ProductProvider, useProducts } from "./contexts/ProductContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AosAnimation from "./components/AosAnimation";
+import Axios from "./utils/Axios";
 
 function App() {
   return (
     <AosAnimation>
-      <FavoriteProvider>
+      <ProductProvider>
         <AuthProvider>
           <RouterProvider router={routes} />
           <ToastContainer />
         </AuthProvider>
-      </FavoriteProvider>
+      </ProductProvider>
     </AosAnimation>
   );
 }

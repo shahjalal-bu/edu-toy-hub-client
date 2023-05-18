@@ -8,25 +8,23 @@ import ChefRecipes from "../pages/ChefRecipes";
 import PrivateRoute from "./PrivateRoute";
 import Error from "../pages/Error";
 import Blog from "../pages/Blog";
+import AddToy from "../pages/AddToy";
 
 const routes = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    // errorElement: <Error />,
+    errorElement: <Error />,
 
     children: [
       {
         path: "/",
         element: <Home />,
       },
-    ],
-  },
-  {
-    path: "/",
-    element: <Main />,
-    errorElement: <Error />,
-    children: [
+      {
+        path: "add-toy",
+        element: <AddToy />,
+      },
       {
         path: "login",
         element: <Login />,
@@ -39,10 +37,14 @@ const routes = createBrowserRouter([
         path: "terms",
         element: <Terms />,
       },
+      {
+        path: "blog",
+        element: <Blog />,
+      },
     ],
   },
   {
-    path: "chef",
+    path: "",
     element: <Main />,
     errorElement: <Error />,
     children: [
@@ -55,21 +57,6 @@ const routes = createBrowserRouter([
         ),
       },
     ],
-  },
-  {
-    path: "/",
-    element: <Main />,
-    errorElement: <Error />,
-    children: [
-      {
-        path: "blog",
-        element: <Blog />,
-      },
-    ],
-  },
-  {
-    path: "/*",
-    element: <Error />,
   },
 ]);
 

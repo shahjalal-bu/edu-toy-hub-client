@@ -1,15 +1,85 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import { useProducts } from "../contexts/ProductContext";
-import categoriesName from "../utils/categoriesName";
-
+import Axios from "../utils/Axios";
+import GlobalSpinner from "./GlobalSpinner";
+import Error from "./Error";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 const RecommendedForYou = () => {
-  const state = useProducts();
-  //take categories name with state
-  const categories = categoriesName(state) || {};
+  const [categoryNames, setCategoryNames] = useState({
+    loading: true,
+    error: true,
+    data: [],
+  });
+  const [categoryData, setCategoryData] = useState({
+    loading: true,
+    error: true,
+    data: [],
+  });
 
-  const [selecteCategory, setSelecteCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  useEffect(() => {
+    async function doGetRequest() {
+      setCategoryNames((prev) => ({
+        ...prev,
+        loading: true,
+        error: false,
+        data: [],
+      }));
+      try {
+        let res = await Axios.get("/toys/categorynames");
+        let data = res.data;
+        setCategoryNames((prev) => ({
+          ...prev,
+          loading: false,
+          error: false,
+          data,
+        }));
+      } catch (error) {
+        setCategoryNames((prev) => ({
+          ...prev,
+          loading: false,
+          error: true,
+          data: [],
+        }));
+      }
+    }
+
+    doGetRequest();
+  }, []);
+
+  useEffect(() => {
+    async function doGetRequest() {
+      setCategoryData((prev) => ({
+        ...prev,
+        loading: true,
+        error: false,
+        data: [],
+      }));
+      try {
+        let res = await Axios.get(`/toys/cat/${selectedCategory}`);
+        let data = res.data;
+        setCategoryData((prev) => ({
+          ...prev,
+          loading: false,
+          error: false,
+          data,
+        }));
+      } catch (error) {
+        setCategoryData((prev) => ({
+          ...prev,
+          loading: false,
+          error: true,
+          data: [],
+        }));
+      }
+    }
+
+    doGetRequest();
+  }, [selectedCategory]);
+
+  console.log(categoryData);
+
   return (
     <>
       <section className="my-10">
@@ -24,132 +94,60 @@ const RecommendedForYou = () => {
               </a>
             </div>
           </div>
-          <Tabs>
-            <TabList>
-              <Tab>All</Tab>
-              {Object.keys(categories).map((el, index) => (
-                <Tab
-                  key={index}
-                  onClick={() => setSelecteCategory(el === "All" ? "" : el)}
-                >
-                  {el}
-                </Tab>
-              ))}
-            </TabList>
-            <TabPanel>
-              <div className="flex flex-wrap gap-2">
-                {state?.products.map((toy) => (
-                  <div
-                    key={toy._id}
-                    className="relative overflow-hidden bg-gray-400 rounded-lg w-100 shadow-lg flex-1 sm:flex-none min-w-fit"
-                  >
-                    <svg
-                      className="absolute bottom-0 left-0 mb-8"
-                      viewBox="0 0 375 283"
-                      fill="none"
-                      style={{ transform: "scale(1.5)", opacity: "0.1" }}
-                    >
-                      <rect
-                        x="159.52"
-                        y={175}
-                        width={152}
-                        height={152}
-                        rx={8}
-                        transform="rotate(-45 159.52 175)"
-                        fill="white"
-                      />
-                      <rect
-                        y="107.48"
-                        width={152}
-                        height={152}
-                        rx={8}
-                        transform="rotate(-45 0 107.48)"
-                        fill="white"
-                      />
-                    </svg>
-                    <div className="flex-1 relative pt-8 px-8 flex items-center justify-center">
-                      <img
-                        className="flex-1 relative w-28"
-                        src="https://user-images.githubusercontent.com/2805249/64069899-8bdaa180-cc97-11e9-9b19-1a9e1a254c18.png"
-                        alt=""
-                      />
-                    </div>
-                    <div className="flex-1 relative text-white px-3 mt-3">
-                      <span className="block opacity-75 -mb-1">Indoor</span>
-                      <div className="flex justify-between">
-                        <span className="block font-semibold">Peace Lily</span>
-                        <span className="bg-white rounded-full text-orange-500 text-xs font-bold px-3 py-2 leading-none flex items-center">
-                          $36.00
-                        </span>
-                      </div>
-                      <button className="bg-slate-900 py-2 px-2 my-2 w-full">
-                        Add to cart
-                      </button>
-                    </div>
-                  </div>
+
+          {categoryNames.loading === false && categoryNames.error === false && (
+            <Tabs>
+              <TabList>
+                {categoryNames?.data.map((el, index) => (
+                  <Tab key={index} onClick={() => setSelectedCategory(el)}>
+                    {el}
+                  </Tab>
                 ))}
-              </div>
-            </TabPanel>
-            {Object.keys(categories).map((el, index) => (
-              <TabPanel key={index}>
-                <div className="flex flex-wrap gap-2">
-                  {/* for categoried product  */}
-                  {categories[el].map((toy) => (
-                    <div
-                      key={toy._id}
-                      className="relative overflow-hidden bg-gray-400 rounded-lg w-100 shadow-lg flex-1 sm:flex-none  min-w-fit"
-                    >
-                      <svg
-                        className="absolute bottom-0 left-0 mb-8"
-                        viewBox="0 0 375 283"
-                        fill="none"
-                        style={{ transform: "scale(1.5)", opacity: "0.1" }}
-                      >
-                        <rect
-                          x="159.52"
-                          y={175}
-                          width={152}
-                          height={152}
-                          rx={8}
-                          transform="rotate(-45 159.52 175)"
-                          fill="white"
-                        />
-                        <rect
-                          y="107.48"
-                          width={152}
-                          height={152}
-                          rx={8}
-                          transform="rotate(-45 0 107.48)"
-                          fill="white"
-                        />
-                      </svg>
-                      <div className="flex-1 relative pt-8 px-8 flex items-center justify-center">
-                        <img
-                          className="flex-1 relative w-28"
-                          src="https://user-images.githubusercontent.com/2805249/64069899-8bdaa180-cc97-11e9-9b19-1a9e1a254c18.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="flex-1 relative text-white px-3 mt-3">
-                        <span className="block opacity-75 -mb-1">Indoor</span>
-                        <div className="flex justify-between">
-                          <span className="block font-semibold">
-                            Peace Lily
-                          </span>
-                          <span className="bg-white rounded-full text-orange-500 text-xs font-bold px-3 py-2 leading-none flex items-center">
-                            $36.00
-                          </span>
+              </TabList>
+              {categoryNames?.data.map((el, index) => (
+                <TabPanel key={index}>
+                  <div className="flex flex-wrap gap-5 items-start justify-start">
+                    {categoryData.loading === false &&
+                      categoryData.error === false &&
+                      categoryData?.data.map((el) => (
+                        <div
+                          className="flex flex-col w-6/12 flex-1 sm:flex-none sm:w-[13%] bg-gray-100 rounded-2xl"
+                          id="product__card"
+                        >
+                          <div className="bg-gray-300 rounded-2xl p-1 relative flex items-center justify-center cursor-pointer">
+                            <img
+                              src="https://user-images.githubusercontent.com/2805249/64069899-8bdaa180-cc97-11e9-9b19-1a9e1a254c18.png"
+                              alt={"name"}
+                              className="h-[220px] w-[220px] object-contain"
+                            />
+
+                            <div
+                              className={`cart-btn absolute top-3 right-3 p-1 text-[28px] bg-white rounded-[0.3rem] hover:bg-primaryColor hover:text-white`}
+                              onClick={() => {}}
+                            >
+                              <AiOutlineShoppingCart />
+                            </div>
+                          </div>
+                          <div className="p-2">
+                            <div className="pt-2  flex w-full justify-between">
+                              <p className="line-clamp-2 min-h-[3rem]">
+                                {el.Name}
+                              </p>
+                            </div>
+                            <p className=" text-[grey]">desc</p>
+
+                            <p className="font-[600] text-lg">{el?.Price}</p>
+                            <button className="bg-slate-900 py-2 px-2 my-2 w-full text-white">
+                              View Details
+                            </button>
+                          </div>
                         </div>
-                        <button className="bg-slate-900 py-2 px-2 my-2 w-full">
-                          Add to cart
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </TabPanel>
-            ))}
-          </Tabs>
+                      ))}
+                  </div>
+                </TabPanel>
+              ))}
+            </Tabs>
+          )}
         </div>
       </section>
     </>

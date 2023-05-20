@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-function AddToy() {
+function AddProduct() {
   const {
     register,
     handleSubmit,
@@ -9,7 +9,7 @@ function AddToy() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data); // Handle form submission
+    console.log(data);
   };
 
   return (
@@ -48,7 +48,6 @@ function AddToy() {
             <option value="action">Action Figures</option>
             <option value="puzzle">Puzzles</option>
             <option value="plush">Plush Toys</option>
-         
           </select>
           {errors.Category && (
             <span className="text-red-500">Category is required</span>
@@ -116,4 +115,4 @@ function AddToy() {
   );
 }
 
-export default AddToy;
+export default AddProduct;

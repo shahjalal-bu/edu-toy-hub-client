@@ -4,11 +4,17 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Terms from "../pages/Terms";
-import ChefRecipes from "../pages/ChefRecipes";
 import PrivateRoute from "./PrivateRoute";
 import Error from "../pages/Error";
 import Blog from "../pages/Blog";
-import AddToy from "../pages/AddToy";
+import AllProducts from "../pages/AllProducts";
+import AddProduct from "../pages/AddProduct";
+import EditProduct from "../pages/EditProduct";
+import Admin from "../layout/Admin";
+import OverView from "../pages/OverView";
+import Order from "../pages/Order";
+import DealsProduct from "../pages/DealsProduct";
+import DiscountProduct from "../pages/DiscountProduct";
 
 const routes = createBrowserRouter([
   {
@@ -20,10 +26,6 @@ const routes = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-      },
-      {
-        path: "add-toy",
-        element: <AddToy />,
       },
       {
         path: "login",
@@ -44,17 +46,45 @@ const routes = createBrowserRouter([
     ],
   },
   {
-    path: "",
-    element: <Main />,
+    path: "admin",
+    element: (
+      <PrivateRoute>
+        <Admin />
+      </PrivateRoute>
+    ),
     errorElement: <Error />,
     children: [
       {
-        path: ":id",
-        element: (
-          <PrivateRoute>
-            <ChefRecipes />
-          </PrivateRoute>
-        ),
+        path: "",
+        element: <OverView />,
+      },
+      {
+        path: "addproduct",
+        element: <AddProduct />,
+      },
+      {
+        path: "editproduct",
+        element: <EditProduct />,
+      },
+      {
+        path: "allproducts",
+        element: <AllProducts />,
+      },
+      {
+        path: "order",
+        element: <Order />,
+      },
+      {
+        path: "deals-of-the-day",
+        element: <DealsProduct />,
+      },
+      {
+        path: "discount",
+        element: <DiscountProduct />,
+      },
+      {
+        path: "editproduct/:id",
+        element: <EditProduct />,
       },
     ],
   },

@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useEffect, useReducer } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useReducer,
+} from "react";
+import Axios from "../utils/Axios";
 // Define the initial state of favorites
 const initialState = {
   loading: false,
@@ -38,6 +45,77 @@ const productReducer = (state, action) => {
 // Create the FavoriteProvider component
 export const ProductProvider = ({ children }) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
+  const [categoryNames, setCategoryNames] = useState({
+    loading: true,
+    error: true,
+    data: [],
+  });
+  const [categoryData, setCategoryData] = useState({
+    loading: true,
+    error: true,
+    data: [],
+  });
+
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  useEffect(() => {
+    async function doGetRequest() {
+      setCategoryNames((prev) => ({
+        ...prev,
+        loading: true,
+        error: false,
+        data: [],
+      }));
+      try {
+        let res = await Axios.get("/toys/categorynames");
+        let data = res.data;
+        setCategoryNames((prev) => ({
+          ...prev,
+          loading: false,
+          error: false,
+          data,
+        }));
+      } catch (error) {
+        setCategoryNames((prev) => ({
+          ...prev,
+          loading: false,
+          error: true,
+          data: [],
+        }));
+      }
+    }
+
+    doGetRequest();
+  }, []);
+
+  useEffect(() => {
+    async function doGetRequest() {
+      setCategoryData((prev) => ({
+        ...prev,
+        loading: true,
+        error: false,
+        data: [],
+      }));
+      try {
+        let res = await Axios.get(`/toys/cat/${selectedCategory}`);
+        let data = res.data;
+        setCategoryData((prev) => ({
+          ...prev,
+          loading: false,
+          error: false,
+          data,
+        }));
+      } catch (error) {
+        setCategoryData((prev) => ({
+          ...prev,
+          loading: false,
+          error: true,
+          data: [],
+        }));
+      }
+    }
+
+    doGetRequest();
+  }, [selectedCategory]);
 
   //define action
   const addProduct = (product) => {
@@ -49,7 +127,9 @@ export const ProductProvider = ({ children }) => {
   };
 
   return (
-    <ProductContext.Provider value={state}>{children}</ProductContext.Provider>
+    <ProductContext.Provider value={{ ...state, categoryNames, categoryData }}>
+      {children}
+    </ProductContext.Provider>
   );
 };
 

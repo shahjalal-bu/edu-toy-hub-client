@@ -5,6 +5,8 @@ import Axios from "../utils/Axios";
 import GlobalSpinner from "./GlobalSpinner";
 import Error from "./Error";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
 const RecommendedForYou = () => {
   const [categoryNames, setCategoryNames] = useState({
     loading: true,
@@ -78,8 +80,6 @@ const RecommendedForYou = () => {
     doGetRequest();
   }, [selectedCategory]);
 
-  console.log(categoryData);
-
   return (
     <>
       <section className="my-10">
@@ -107,36 +107,46 @@ const RecommendedForYou = () => {
               {categoryNames?.data.map((el, index) => (
                 <TabPanel key={index}>
                   <div className="flex flex-wrap gap-5 items-start justify-start">
+                    {categoryData.loading && <GlobalSpinner />}
                     {categoryData.loading === false &&
                       categoryData.error === false &&
                       categoryData?.data.map((el) => (
                         <div
-                          className="flex flex-col w-6/12 flex-1 sm:flex-none sm:w-[13%] bg-gray-100 rounded-2xl"
+                          className="flex flex-col w-[45%] sm:flex-none sm:w-[13%] bg-gray-100 rounded-2xl"
                           id="product__card"
                         >
                           <div className="bg-gray-300 rounded-2xl p-1 relative flex items-center justify-center cursor-pointer">
                             <img
-                              src="https://user-images.githubusercontent.com/2805249/64069899-8bdaa180-cc97-11e9-9b19-1a9e1a254c18.png"
+                              src={el?.Picture}
                               alt={"name"}
-                              className="h-[220px] w-[220px] object-contain"
+                              className="h-[180px] w-[220px] object-fill"
                             />
 
                             <div
-                              className={`cart-btn absolute top-3 right-3 p-1 text-[28px] bg-white rounded-[0.3rem] hover:bg-primaryColor hover:text-white`}
+                              className={`cart-btn absolute top-3 right-3 p-1 text-[28px] bg-white rounded-[0.3rem] hover:bg-zinc-800 hover:text-white`}
                               onClick={() => {}}
                             >
                               <AiOutlineShoppingCart />
                             </div>
                           </div>
                           <div className="p-2">
-                            <div className="pt-2  flex w-full justify-between">
+                            <div className="pt-2 flex w-full justify-between">
                               <p className="line-clamp-2 min-h-[3rem]">
                                 {el.Name}
                               </p>
                             </div>
-                            <p className=" text-[grey]">desc</p>
-
-                            <p className="font-[600] text-lg">{el?.Price}</p>
+                            <div className="flex justify-between items-center">
+                              <p className=" text-[grey]">
+                                {
+                                  <Rating
+                                    style={{ maxWidth: 70 }}
+                                    value={Number(el.Rating)}
+                                    readOnly
+                                  />
+                                }
+                              </p>
+                              <p className="font-[600] text-lg">{el?.Price}</p>
+                            </div>
                             <button className="bg-slate-900 py-2 px-2 my-2 w-full text-white">
                               View Details
                             </button>

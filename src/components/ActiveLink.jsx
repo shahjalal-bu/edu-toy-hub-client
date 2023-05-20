@@ -4,7 +4,9 @@ import { NavLink } from "react-router-dom";
 const ActiveLink = ({ children, className, ...rest }) => {
   return (
     <NavLink
-      className={({ isActive }) => (isActive ? "active" : "") + " " + className}
+      className={({ isActive }) =>
+        (isActive ? "bg-slate-800 text-white" : "") + " " + className
+      }
       {...rest}
     >
       {children}

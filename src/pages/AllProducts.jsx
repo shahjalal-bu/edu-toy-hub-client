@@ -40,6 +40,7 @@ const AllProducts = () => {
               <th>Price</th>
               <th>Rating</th>
               <th>Quantity</th>
+              <th>View Details</th>
               <th className="text-center">Function</th>
             </tr>
           </thead>
@@ -59,6 +60,13 @@ const AllProducts = () => {
                 <td>{el.Price}</td>
                 <td>{el.Rating}</td>
                 <td>{el.Qty}</td>
+                <td>
+                  <Link to={`/toy/${el._id}`}>
+                    <button className="btn btn-primary btn-sm mx-1">
+                      View Detail
+                    </button>
+                  </Link>
+                </td>
                 <td>
                   <Link to={`/admin/editproduct/${el._id}`}>
                     <button className="btn btn-primary btn-sm mx-1">

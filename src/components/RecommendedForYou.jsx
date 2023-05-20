@@ -7,6 +7,7 @@ import Error from "./Error";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import { Link } from "react-router-dom";
 const RecommendedForYou = () => {
   const [categoryNames, setCategoryNames] = useState({
     loading: true,
@@ -132,7 +133,7 @@ const RecommendedForYou = () => {
                           <div className="p-2">
                             <div className="pt-2 flex w-full justify-between">
                               <p className="line-clamp-2 min-h-[3rem]">
-                                {el.Name}
+                                {el?.Name}
                               </p>
                             </div>
                             <div className="flex justify-between items-center">
@@ -140,16 +141,18 @@ const RecommendedForYou = () => {
                                 {
                                   <Rating
                                     style={{ maxWidth: 70 }}
-                                    value={Number(el.Rating)}
+                                    value={Number(el?.Rating)}
                                     readOnly
                                   />
                                 }
                               </p>
                               <p className="font-[600] text-lg">{el?.Price}</p>
                             </div>
-                            <button className="bg-slate-900 py-2 px-2 my-2 w-full text-white">
-                              View Details
-                            </button>
+                            <Link to={`/toy/${el?._id}`}>
+                              <button className="bg-slate-900 py-2 px-2 my-2 w-full text-white">
+                                View Details
+                              </button>
+                            </Link>
                           </div>
                         </div>
                       ))}

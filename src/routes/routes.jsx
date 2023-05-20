@@ -16,6 +16,7 @@ import Order from "../pages/Order";
 import DealsProduct from "../pages/DealsProduct";
 import DiscountProduct from "../pages/DiscountProduct";
 import MyProducts from "../pages/MyProducts";
+import ViewProduct from "../pages/ViewProduct";
 
 const routes = createBrowserRouter([
   {
@@ -43,15 +44,19 @@ const routes = createBrowserRouter([
         path: "blog",
         element: <Blog />,
       },
+      {
+        path: "toy/:id",
+        element: (
+          <PrivateRoute>
+            <ViewProduct />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
     path: "admin",
-    element: (
-      <PrivateRoute>
-        <Admin />
-      </PrivateRoute>
-    ),
+    element: <Admin />,
     errorElement: <Error />,
     children: [
       {
@@ -59,16 +64,28 @@ const routes = createBrowserRouter([
         element: <OverView />,
       },
       {
-        path:"myproducts",
-        element: <MyProducts />
+        path: "myproducts",
+        element: (
+          <PrivateRoute>
+            <MyProducts />
+          </PrivateRoute>
+        ),
       },
       {
         path: "addproduct",
-        element: <AddProduct />,
+        element: (
+          <PrivateRoute>
+            <AddProduct />
+          </PrivateRoute>
+        ),
       },
       {
         path: "editproduct",
-        element: <EditProduct />,
+        element: (
+          <PrivateRoute>
+            <EditProduct />
+          </PrivateRoute>
+        ),
       },
       {
         path: "allproducts",

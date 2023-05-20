@@ -9,7 +9,8 @@ import Axios from "../utils/Axios";
 // Define the initial state of favorites
 const initialState = {
   loading: false,
-  products: [],
+  // categoryData: {},
+  // categoryNames: {},
   error: false,
   cart: [],
 };
@@ -19,7 +20,6 @@ const ProductContext = createContext();
 const ADD_PRODUCT = "ADD_PRODUCT";
 const REMOVE_PRODUCT = "REMOVE_PRODUCT";
 const ADD_TO_CART = "ADD_TO_CART";
-
 // Define the reducer function
 const productReducer = (state, action) => {
   switch (action.type) {
@@ -50,6 +50,7 @@ export const ProductProvider = ({ children }) => {
     error: true,
     data: [],
   });
+  const [dataLimit, setDataLimit] = useState(20);
   const [categoryData, setCategoryData] = useState({
     loading: true,
     error: true,
@@ -96,7 +97,9 @@ export const ProductProvider = ({ children }) => {
         data: [],
       }));
       try {
-        let res = await Axios.get(`/toys/cat/${selectedCategory}`);
+        let res = await Axios.get(
+          `/toys/cat/${selectedCategory}?limit=${dataLimit}`
+        );
         let data = res.data;
         setCategoryData((prev) => ({
           ...prev,
@@ -115,7 +118,7 @@ export const ProductProvider = ({ children }) => {
     }
 
     doGetRequest();
-  }, [selectedCategory]);
+  }, [selectedCategory, dataLimit]);
 
   //define action
   const addProduct = (product) => {
@@ -127,7 +130,15 @@ export const ProductProvider = ({ children }) => {
   };
 
   return (
-    <ProductContext.Provider value={{ ...state, categoryNames, categoryData }}>
+    <ProductContext.Provider
+      value={{
+        ...state,
+        categoryNames,
+        categoryData,
+        setCategoryData,
+        setDataLimit,
+      }}
+    >
       {children}
     </ProductContext.Provider>
   );

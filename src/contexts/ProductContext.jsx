@@ -137,6 +137,7 @@ export const ProductProvider = ({ children }) => {
         categoryData,
         setCategoryData,
         setDataLimit,
+        setSelectedCategory,
       }}
     >
       {children}

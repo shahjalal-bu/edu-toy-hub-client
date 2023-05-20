@@ -8,78 +8,80 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { Link } from "react-router-dom";
+import { useProducts } from "../contexts/ProductContext";
 const RecommendedForYou = () => {
-  const [categoryNames, setCategoryNames] = useState({
-    loading: true,
-    error: true,
-    data: [],
-  });
-  const [categoryData, setCategoryData] = useState({
-    loading: true,
-    error: true,
-    data: [],
-  });
+  // const [categoryNames, setCategoryNames] = useState({
+  //   loading: true,
+  //   error: true,
+  //   data: [],
+  // });
+  // const [categoryData, setCategoryData] = useState({
+  //   loading: true,
+  //   error: true,
+  //   data: [],
+  // });
+  const { categoryNames, categoryData, setSelectedCategory } = useProducts();
 
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  useEffect(() => {
-    async function doGetRequest() {
-      setCategoryNames((prev) => ({
-        ...prev,
-        loading: true,
-        error: false,
-        data: [],
-      }));
-      try {
-        let res = await Axios.get("/toys/categorynames");
-        let data = res.data;
-        setCategoryNames((prev) => ({
-          ...prev,
-          loading: false,
-          error: false,
-          data,
-        }));
-      } catch (error) {
-        setCategoryNames((prev) => ({
-          ...prev,
-          loading: false,
-          error: true,
-          data: [],
-        }));
-      }
-    }
+  // const [selectedCategory, setSelectedCategory] = useState("All");
+  // useEffect(() => {
+  //   async function doGetRequest() {
+  //     setCategoryNames((prev) => ({
+  //       ...prev,
+  //       loading: true,
+  //       error: false,
+  //       data: [],
+  //     }));
+  //     try {
+  //       let res = await Axios.get("/toys/categorynames");
+  //       let data = res.data;
+  //       setCategoryNames((prev) => ({
+  //         ...prev,
+  //         loading: false,
+  //         error: false,
+  //         data,
+  //       }));
+  //     } catch (error) {
+  //       setCategoryNames((prev) => ({
+  //         ...prev,
+  //         loading: false,
+  //         error: true,
+  //         data: [],
+  //       }));
+  //     }
+  //   }
 
-    doGetRequest();
-  }, []);
+  //   doGetRequest();
+  // }, []);
 
-  useEffect(() => {
-    async function doGetRequest() {
-      setCategoryData((prev) => ({
-        ...prev,
-        loading: true,
-        error: false,
-        data: [],
-      }));
-      try {
-        let res = await Axios.get(`/toys/cat/${selectedCategory}`);
-        let data = res.data;
-        setCategoryData((prev) => ({
-          ...prev,
-          loading: false,
-          error: false,
-          data,
-        }));
-      } catch (error) {
-        setCategoryData((prev) => ({
-          ...prev,
-          loading: false,
-          error: true,
-          data: [],
-        }));
-      }
-    }
+  // useEffect(() => {
+  //   async function doGetRequest() {
+  //     setCategoryData((prev) => ({
+  //       ...prev,
+  //       loading: true,
+  //       error: false,
+  //       data: [],
+  //     }));
+  //     try {
+  //       let res = await Axios.get(`/toys/cat/${selectedCategory}`);
+  //       let data = res.data;
+  //       setCategoryData((prev) => ({
+  //         ...prev,
+  //         loading: false,
+  //         error: false,
+  //         data,
+  //       }));
+  //     } catch (error) {
+  //       setCategoryData((prev) => ({
+  //         ...prev,
+  //         loading: false,
+  //         error: true,
+  //         data: [],
+  //       }));
+  //     }
+  //   }
 
-    doGetRequest();
-  }, [selectedCategory]);
+  //   doGetRequest();
+  // }, [selectedCategory]);
 
   return (
     <>

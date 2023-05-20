@@ -1,15 +1,38 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
+import Axios from "../utils/Axios";
+import { useAuth } from "../contexts/AuthContext";
+import { useProducts } from "../contexts/ProductContext";
+import Swal from "sweetalert2";
 function AddProduct() {
+  const { categoryData, categoryNames } = useProducts();
+  const { currentUser } = useAuth();
+  console.log(currentUser);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
+  const addProduct = async (formdata) => {
+    try {
+      const data = {
+        ...formdata,
+        Seller: currentUser?.displayName,
+        SellerEmail: currentUser?.email,
+      };
+      const response = await Axios.post("/toys", data);
+      if (response.status === 200) {
+        Swal.fire("Good job!", "Data Added Successfully!", "success");
+        reset();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const onSubmit = (data) => {
-    console.log(data);
+    addProduct(data);
   };
 
   return (
@@ -34,6 +57,23 @@ function AddProduct() {
         </div>
         <div className="w-full md:w-1/2 px-2 my-2">
           <label
+            htmlFor="Picture"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Picture:
+          </label>
+          <input
+            id="Picture"
+            {...register("Picture", { required: true })}
+            type="text"
+            className="w-full h-10 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+          {errors.Picture && (
+            <span className="text-red-500">Toy Picture is required</span>
+          )}
+        </div>
+        <div className="w-full md:w-1/2 px-2 my-2">
+          <label
             htmlFor="Category"
             className="block text-gray-700 text-sm font-bold mb-2"
           >
@@ -45,9 +85,12 @@ function AddProduct() {
             className="w-full h-10 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           >
             <option value="">Select category</option>
-            <option value="action">Action Figures</option>
-            <option value="puzzle">Puzzles</option>
-            <option value="plush">Plush Toys</option>
+            {!categoryNames.loading &&
+              categoryNames.data.map((el, index) => (
+                <option key={index} value={el}>
+                  {el}
+                </option>
+              ))}
           </select>
           {errors.Category && (
             <span className="text-red-500">Category is required</span>
@@ -72,19 +115,36 @@ function AddProduct() {
         </div>
         <div className="w-full md:w-1/2 px-2 my-2">
           <label
-            htmlFor="quantity"
+            htmlFor="Qty"
             className="block text-gray-700 text-sm font-bold mb-2"
           >
-            Available Quantity:
+            Quantity:
           </label>
           <input
-            id="quantity"
-            {...register("quantity", { required: true })}
+            id="Qty"
+            {...register("Qty", { required: true })}
             type="number"
             className="w-full h-10 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
-          {errors.quantity && (
+          {errors.Qty && (
             <span className="text-red-500">Quantity is required</span>
+          )}
+        </div>
+        <div className="w-full md:w-1/2 px-2 my-2">
+          <label
+            htmlFor="Rating"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Rating:
+          </label>
+          <input
+            id="Rating"
+            {...register("Rating", { required: true })}
+            type="text"
+            className="w-full h-10 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+          {errors.Rating && (
+            <span className="text-red-500">Rating is required</span>
           )}
         </div>
         <div className="w-full px-2">
@@ -95,12 +155,12 @@ function AddProduct() {
             Description:
           </label>
           <textarea
-            id="description"
-            {...register("description", { required: true })}
+            id="Description"
+            {...register("Description", { required: true })}
             rows={4}
             className="w-full h-24 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           ></textarea>
-          {errors.description && (
+          {errors.Description && (
             <span className="text-red-500">Description is required</span>
           )}
         </div>

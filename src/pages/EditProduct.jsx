@@ -5,6 +5,7 @@ import { useProducts } from "../contexts/ProductContext";
 import Axios from "../utils/Axios";
 import GlobalSpinner from "../components/GlobalSpinner";
 import { useAuth } from "../contexts/AuthContext";
+import Swal from "sweetalert2";
 
 function EditProduct() {
   const params = useParams();
@@ -67,8 +68,10 @@ function EditProduct() {
           Seller: currentUser?.displayName,
           SellerEmail: currentUser?.email,
         });
-        alert("Data updated successfully:", response.data);
-        // Perform any additional actions after a successful update
+        if (response.status === 200) {
+          Swal.fire("Good job!", "Data updated successfully!", "success");
+        }
+        //TODO: Perform any additional actions after a successful update
       } else {
         alert("You have to fill all field");
       }

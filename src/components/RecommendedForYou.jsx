@@ -1,88 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import Axios from "../utils/Axios";
 import GlobalSpinner from "./GlobalSpinner";
-import Error from "./Error";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { Link } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContext";
 const RecommendedForYou = () => {
-  // const [categoryNames, setCategoryNames] = useState({
-  //   loading: true,
-  //   error: true,
-  //   data: [],
-  // });
-  // const [categoryData, setCategoryData] = useState({
-  //   loading: true,
-  //   error: true,
-  //   data: [],
-  // });
-  const { categoryNames, categoryData, setSelectedCategory } = useProducts();
-
-  // const [selectedCategory, setSelectedCategory] = useState("All");
-  // useEffect(() => {
-  //   async function doGetRequest() {
-  //     setCategoryNames((prev) => ({
-  //       ...prev,
-  //       loading: true,
-  //       error: false,
-  //       data: [],
-  //     }));
-  //     try {
-  //       let res = await Axios.get("/toys/categorynames");
-  //       let data = res.data;
-  //       setCategoryNames((prev) => ({
-  //         ...prev,
-  //         loading: false,
-  //         error: false,
-  //         data,
-  //       }));
-  //     } catch (error) {
-  //       setCategoryNames((prev) => ({
-  //         ...prev,
-  //         loading: false,
-  //         error: true,
-  //         data: [],
-  //       }));
-  //     }
-  //   }
-
-  //   doGetRequest();
-  // }, []);
-
-  // useEffect(() => {
-  //   async function doGetRequest() {
-  //     setCategoryData((prev) => ({
-  //       ...prev,
-  //       loading: true,
-  //       error: false,
-  //       data: [],
-  //     }));
-  //     try {
-  //       let res = await Axios.get(`/toys/cat/${selectedCategory}`);
-  //       let data = res.data;
-  //       setCategoryData((prev) => ({
-  //         ...prev,
-  //         loading: false,
-  //         error: false,
-  //         data,
-  //       }));
-  //     } catch (error) {
-  //       setCategoryData((prev) => ({
-  //         ...prev,
-  //         loading: false,
-  //         error: true,
-  //         data: [],
-  //       }));
-  //     }
-  //   }
-
-  //   doGetRequest();
-  // }, [selectedCategory]);
-
+  const { categoryNames, categoryData, setSelectedCategory, setDataLimit } =
+    useProducts();
   return (
     <>
       <section className="my-10">
@@ -163,6 +90,14 @@ const RecommendedForYou = () => {
               ))}
             </Tabs>
           )}
+          <div className="flex justify-center">
+            <button
+              className="bg-slate-900 rounded-sm py-4 px-2 my-2 w-2/6 text-white"
+              onClick={() => setDataLimit((prev) => prev + 20)}
+            >
+              Load More Data
+            </button>
+          </div>
         </div>
       </section>
     </>

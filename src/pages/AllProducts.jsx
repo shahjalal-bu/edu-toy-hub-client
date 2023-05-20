@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
 const AllProducts = () => {
-  const { categoryData } = useProducts();
+  const { categoryData, setDataLimit } = useProducts();
   console.log(categoryData);
   const isDelete = async () => {
     const res = await Swal.fire({
@@ -90,6 +90,14 @@ const AllProducts = () => {
             ))}
           </tbody>
         </table>
+        <div className="flex justify-center">
+          <button
+            className="bg-slate-900 rounded-sm py-4 px-2 my-2 w-2/6 text-white"
+            onClick={() => setDataLimit((prev) => prev + 20)}
+          >
+            Load More Data
+          </button>
+        </div>
       </div>
     );
 };

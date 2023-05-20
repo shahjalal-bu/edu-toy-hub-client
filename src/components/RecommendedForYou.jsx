@@ -86,7 +86,7 @@ const RecommendedForYou = () => {
         <div className="container px-5 sm:px-20 mx-auto">
           <div className="flex justify-between pt-3 pb-2 border-b-2 border-gray-200 mb-2 items-center">
             <div className="sm:flex items-center sm:gap-20">
-              <div className="sm:text-2xl font-bold">Recendly Added</div>
+              <div className="sm:text-2xl font-bold">Shop By Category</div>
             </div>
             <div>
               <a href="./" className="transition-all hover:text-orange-400">

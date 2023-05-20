@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
 import ActiveLink from "../components/ActiveLink";
 import logo from "../assets/logo.png";
 
@@ -8,12 +7,13 @@ const Navbar = () => {
   const { currentUser, logout } = useAuth();
   const { displayName, photoURL } = currentUser || {};
   const [isOpen, setIsOpen] = useState(false);
+  // Home, All Toys, My Toys, Add A Toy, Blogs, and User profile picture.
   return (
     <>
       <nav className="relative  py-4 flex justify-between items-center bg-white container mx-auto px-5 sm:px-20">
-        <a className="text-3xl font-bold leading-none" href="#">
+        <ActiveLink className="text-3xl font-bold leading-none" to="/">
           <img className="h-14" src={logo} alt="logo" />
-        </a>
+        </ActiveLink>
         <div className="lg:hidden">
           <button
             className="navbar-burger flex items-center text-blue-600 p-3"
@@ -31,9 +31,7 @@ const Navbar = () => {
         </div>
         <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2  lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
           <li>
-            <a className="text-sm text-gray-400 hover:text-gray-500" href="#">
-              Home
-            </a>
+            <ActiveLink to="/">Home</ActiveLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -52,9 +50,7 @@ const Navbar = () => {
             </svg>
           </li>
           <li>
-            <a className="text-sm text-blue-600 font-bold" href="#">
-              About Us
-            </a>
+            <ActiveLink to="/admin/allproducts">All Toys</ActiveLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -73,9 +69,7 @@ const Navbar = () => {
             </svg>
           </li>
           <li>
-            <a className="text-sm text-gray-400 hover:text-gray-500" href="#">
-              Services
-            </a>
+            <ActiveLink to="/admin/myproducts">My Toys</ActiveLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -94,9 +88,7 @@ const Navbar = () => {
             </svg>
           </li>
           <li>
-            <a className="text-sm text-gray-400 hover:text-gray-500" href="#">
-              Pricing
-            </a>
+            <ActiveLink to="/admin/addproduct">Add Toy</ActiveLink>
           </li>
           <li className="text-gray-300">
             <svg
@@ -115,31 +107,53 @@ const Navbar = () => {
             </svg>
           </li>
           <li>
-            <a className="text-sm text-gray-400 hover:text-gray-500" href="#">
-              Contact
-            </a>
+            <ActiveLink to="/blog">Blog</ActiveLink>
           </li>
         </ul>
-        <a
-          className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
-          href="#"
-        >
-          Sign In
-        </a>
-        <a
-          className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
-          href="#"
-        >
-          Sign up
-        </a>
+        {currentUser?.email ? (
+          <div className="hidden justify-center items-center gap-2 lg:flex">
+            <div
+              className="avatar justify-center items-center tooltip tooltip-bottom"
+              data-tip={currentUser.displayName}
+            >
+              <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img src={currentUser?.photoURL} />
+              </div>
+            </div>
+            <button
+              className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
+              onClick={logout}
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <>
+            <ActiveLink
+              className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+              to="/login"
+            >
+              Sign In
+            </ActiveLink>
+            <ActiveLink
+              className="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
+              to="/register"
+            >
+              Sign up
+            </ActiveLink>
+          </>
+        )}
       </nav>
       <div className={`navbar-menu relative z-50 ${!isOpen && "hidden"}`}>
         <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
         <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
           <div className="flex items-center mb-8">
-            <a className="mr-auto text-3xl font-bold leading-none" href="#">
+            <ActiveLink
+              className="mr-auto text-3xl font-bold leading-none"
+              to="/"
+            >
               <img className="h-14 w-3/4" src={logo} alt="logo" />
-            </a>
+            </ActiveLink>
             <button className="navbar-close" onClick={() => setIsOpen(!isOpen)}>
               <svg
                 className="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500"
@@ -160,64 +174,83 @@ const Navbar = () => {
           <div>
             <ul>
               <li className="mb-1">
-                <a
-                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
+                <ActiveLink
+                  className="block p-4 text-sm font-semibold hover:bg-blue-50  rounded"
+                  to="/"
                 >
                   Home
-                </a>
+                </ActiveLink>
               </li>
               <li className="mb-1">
-                <a
-                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
+                <ActiveLink
+                  className="block p-4 text-sm font-semibold  hover:bg-blue-50  rounded"
+                  to="/admin/allproducts"
                 >
-                  About Us
-                </a>
+                  All toys
+                </ActiveLink>
               </li>
               <li className="mb-1">
-                <a
-                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
+                <ActiveLink
+                  className="block p-4 text-sm font-semibold  hover:bg-blue-50  rounded"
+                  to="/admin/mytoys"
                 >
-                  Services
-                </a>
+                  My Toys
+                </ActiveLink>
               </li>
               <li className="mb-1">
-                <a
-                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
+                <ActiveLink
+                  className="block p-4 text-sm font-semibold hover:bg-blue-50 rounded"
+                  to="/admin/addproduct"
                 >
-                  Pricing
-                </a>
+                  Add Toy
+                </ActiveLink>
               </li>
               <li className="mb-1">
-                <a
-                  className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                  href="#"
+                <ActiveLink
+                  className="block p-4 text-sm font-semibold hover:bg-blue-50 rounded"
+                  to="/blog"
                 >
-                  Contact
-                </a>
+                  Blog
+                </ActiveLink>
               </li>
             </ul>
           </div>
           <div className="mt-auto">
-            <div className="pt-6">
-              <a
-                className="block px-4 py-3 mb-3  text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
-                href="#"
-              >
-                Sign in
-              </a>
-              <a
-                className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
-                href="#"
-              >
-                Sign Up
-              </a>
-            </div>
+            {currentUser?.email ? (
+              <div className="flex justify-center items-center gap-2">
+                <div
+                  className="avatar justify-center items-center tooltip tooltip-bottom"
+                  data-tip={currentUser.displayName}
+                >
+                  <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <img src={currentUser?.photoURL} />
+                  </div>
+                </div>
+                <button
+                  className=" py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
+                  onClick={logout}
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="pt-6">
+                <a
+                  className="block px-4 py-3 mb-3  text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
+                  href="#"
+                >
+                  Sign in
+                </a>
+                <a
+                  className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
+                  href="#"
+                >
+                  Sign Up
+                </a>
+              </div>
+            )}
             <p className="my-4 text-xs text-center text-gray-400">
-              <span>Copyright © 2021</span>
+              <span>Copyright © 2023</span>
             </p>
           </div>
         </nav>

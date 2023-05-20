@@ -51,7 +51,7 @@ const DealsOfTheDay = () => {
     <>
       <section id="deals-of-the-day">
         <div className="container flex gap-5 px-5 py-2 md:py-3 md:px-20 mx-auto">
-          <div className="w-2/12 hidden sm:block">
+          <div className="w-2/12 hidden lg:block">
             <div className="flex justify-between pt-3 pb-2 border-b-2 border-gray-200 mb-2 items-center">
               <div className="sm:text-2xl font-bold">All Categories</div>
             </div>

@@ -1,13 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const ActiveLink = ({ children, className, ...rest }) => {
+const ActiveLink = ({ children, to, className }) => {
   return (
     <NavLink
-      className={({ isActive }) =>
-        (isActive ? "bg-slate-800 text-white" : "") + " " + className
+      to={to}
+      className={({ isActive, isPending }) =>
+        isPending
+          ? "pending " + className
+          : isActive
+          ? "text-sm text-blue-600 font-bold " + className
+          : " " + className
       }
-      {...rest}
     >
       {children}
     </NavLink>

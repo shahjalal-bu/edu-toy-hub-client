@@ -15,6 +15,7 @@ import OverView from "../pages/OverView";
 import Order from "../pages/Order";
 import DealsProduct from "../pages/DealsProduct";
 import DiscountProduct from "../pages/DiscountProduct";
+import MyProducts from "../pages/MyProducts";
 
 const routes = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const routes = createBrowserRouter([
       {
         path: "",
         element: <OverView />,
+      },
+      {
+        path:"myproducts",
+        element: <MyProducts />
       },
       {
         path: "addproduct",

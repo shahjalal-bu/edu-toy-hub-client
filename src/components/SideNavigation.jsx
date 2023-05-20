@@ -6,8 +6,10 @@ import { MdOutlineLocalOffer } from "react-icons/md";
 import { CiDiscount1, CiLogin } from "react-icons/ci";
 import { RiContactsLine } from "react-icons/ri";
 import ActiveLink from "./ActiveLink";
+import { useAuth } from "../contexts/AuthContext";
 
 const SideNavigation = () => {
+  const { logout } = useAuth();
   return (
     <div className=" bg-gray-200 min-h-[85vh]  lg:flex flex-col w-60 hidden">
       <ActiveLink to="">
@@ -43,7 +45,10 @@ const SideNavigation = () => {
       <div className="flex items-center gap-2 border-b  px-2 py-2 text-lg font-semibold border-gray-100">
         <RiContactsLine /> <p>Contact Us</p>
       </div>
-      <div className="flex items-center gap-2 border-b  px-2 py-2 text-lg font-semibold border-gray-100">
+      <div
+        className="flex items-center gap-2 border-b  px-2 py-2 text-lg font-semibold border-gray-100 cursor-pointer"
+        onClick={logout}
+      >
         <CiLogin /> <p>Log out</p>
       </div>
     </div>

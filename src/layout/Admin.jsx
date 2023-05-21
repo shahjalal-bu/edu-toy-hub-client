@@ -15,7 +15,7 @@ const Admin = () => {
       <div className="container mx-auto px-5 sm:px-20 my-4">
         <div className="flex gap-x-5">
           <SideNavigation />
-          <div className="max-h-[85vh] overflow-auto">
+          <div className=" overflow-auto">
             <Outlet />
           </div>
         </div>

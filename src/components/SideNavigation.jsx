@@ -45,12 +45,7 @@ const SideNavigation = () => {
       <div className="flex items-center gap-2 border-b  px-2 py-2 text-lg font-semibold border-gray-100">
         <RiContactsLine /> <p>Contact Us</p>
       </div>
-      <div
-        className="flex items-center gap-2 border-b  px-2 py-2 text-lg font-semibold border-gray-100 cursor-pointer"
-        onClick={logout}
-      >
-        <CiLogin /> <p>Log out</p>
-      </div>
+     
     </div>
   );
 };

@@ -9,7 +9,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContext";
 import { useAuth } from "../contexts/AuthContext";
 import Swal from "sweetalert2";
-const RecommendedForYou = () => {
+const ToyByCategory = () => {
   const { categoryNames, categoryData, setSelectedCategory, setDataLimit } =
     useProducts();
   const { currentUser, loading } = useAuth();
@@ -127,4 +127,4 @@ const RecommendedForYou = () => {
   );
 };
 
-export default RecommendedForYou;
+export default ToyByCategory;

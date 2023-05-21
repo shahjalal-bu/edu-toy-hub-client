@@ -2,10 +2,10 @@
 import React, { useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import DealsOfTheDay from "../components/DealsOfTheDay";
-import RecommendedForYou from "../components/RecommendedForYou";
 import Services from "../components/Services";
 import Subscribe from "../components/Subscribe";
 import Gallery from "../components/Gallery";
+import ToyByCategory from "../components/ToyByCategory";
 
 const Home = () => {
   //set dynamic title
@@ -21,7 +21,7 @@ const Home = () => {
       <HeroSection />
       <DealsOfTheDay />
       <Gallery />
-      <RecommendedForYou />
+      <ToyByCategory />
       <Subscribe />
       <Services />
     </>

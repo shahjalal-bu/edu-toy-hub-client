@@ -118,7 +118,7 @@ const MyProducts = () => {
                 <th>Price</th>
                 <th>Rating</th>
                 <th>Quantity</th>
-                <th>View Details</th>
+                <th>View</th>
                 <th className="text-center">Function</th>
               </tr>
             </thead>
@@ -134,14 +134,14 @@ const MyProducts = () => {
                   <td>
                     <img className="w-16 h-16" src={el?.Picture} alt="img" />
                   </td>
-                  <td>{el?.Category}</td>
+                  <td className="w-16 whitespace-normal">{el?.Category}</td>
                   <td>{el?.Price}</td>
                   <td>{el?.Rating}</td>
                   <td>{el?.Qty}</td>
                   <td>
                     <Link to={`/toy/${el?._id}`}>
                       <button className="btn btn-primary btn-sm mx-1">
-                        View Detail
+                        View
                       </button>
                     </Link>
                   </td>

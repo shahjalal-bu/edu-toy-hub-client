@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useProducts } from "../contexts/ProductContext";
 import GlobalSpinner from "../components/GlobalSpinner";
 import Error from "../components/Error";
@@ -11,7 +11,6 @@ import Axios from "../utils/Axios";
 
 const AllProducts = () => {
   const { categoryData, setDataLimit } = useProducts();
-
   const handleDelete = async (id) => {
     try {
       const response = await Axios.delete(`/toys/${id}`);
@@ -34,6 +33,32 @@ const AllProducts = () => {
       handleDelete(id);
     }
   };
+  const handleDealsOfTheDay = async (id, dealsOfTheDay) => {
+    try {
+      const response = await Axios.patch(`toys/deals-of-the-day/${id}`, {
+        dealsOfTheDay: true,
+      });
+      console.log(response.data);
+      // Handle response data
+    } catch (error) {
+      console.error(error);
+      // Handle error
+    }
+  };
+
+  const isDealsOfDay = async (id, dealsOfTheDay) => {
+    const res = await Swal.fire({
+      title: "Are you sure?",
+      text: "You want to deal of the day this product?",
+      icon: "warning",
+      confirmButtonText: "YES",
+      showCancelButton: true,
+    });
+    if (res.isConfirmed) {
+      handleDealsOfTheDay(id, dealsOfTheDay);
+    }
+  };
+
   //render to ui
 
   if (categoryData.loading) return <GlobalSpinner />;
@@ -90,7 +115,10 @@ const AllProducts = () => {
                   >
                     <AiOutlineDelete />
                   </button>
-                  <button className="btn btn-success btn-sm mx-1">
+                  <button
+                    className="btn btn-success btn-sm mx-1"
+                    onClick={() => isDealsOfDay(el?._id, el?.dealsOfTheDay)}
+                  >
                     <MdOutlineLocalOffer />
                   </button>
                   <button className="btn btn-accent btn-sm mx-1">

@@ -105,8 +105,6 @@ const DealsOfTheDay = () => {
     doGetRequest();
   }, []);
 
-  console.log(categoryNames);
-
   return (
     <>
       <section id="deals-of-the-day">
@@ -165,9 +163,10 @@ const DealsOfTheDay = () => {
                 dealsData.error === false &&
                 dealsData?.data.map((el) => (
                   <div
-                    className="flex flex-col w-[45%] sm:flex-none sm:w-[13%] bg-gray-100 rounded-2xl"
+                    className="flex flex-col w-[48%] sm:flex-none sm:w-[13%] bg-gray-100 rounded-2xl"
                     id="product__card"
                     key={el?._id}
+                    data-aos="zoom-in"
                   >
                     <div className="bg-gray-300 rounded-2xl p-1 relative flex items-center justify-center cursor-pointer">
                       <img

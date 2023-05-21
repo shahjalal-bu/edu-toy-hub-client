@@ -144,7 +144,7 @@ const AllProducts = () => {
                     </span>
                   </td>
                   <td>
-                    <img className="w-16 h-16" src={el?.Picture} alt="img" />
+                    <img className="w-20 h-16" src={el?.Picture} alt="img" />
                   </td>
                   <td>{el?.Seller}</td>
                   <td>{el?.Category}</td>

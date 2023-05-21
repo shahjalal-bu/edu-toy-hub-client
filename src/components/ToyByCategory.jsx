@@ -56,15 +56,16 @@ const ToyByCategory = () => {
               </TabList>
               {categoryNames?.data.map((el, index) => (
                 <TabPanel key={index}>
-                  <div className="flex flex-wrap gap-5 items-start justify-start">
+                  <div className="flex flex-wrap gap-2 items-start justify-start">
                     {categoryData.loading && <GlobalSpinner />}
                     {categoryData.loading === false &&
                       categoryData.error === false &&
                       categoryData?.data.map((el) => (
                         <div
-                          className="flex flex-col w-[45%] sm:flex-none sm:w-[13%] bg-gray-100 rounded-2xl"
+                          className="flex flex-col w-[48%] sm:flex-none sm:w-[13%] bg-gray-100 rounded-2xl"
                           id="product__card"
                           key={el?._id}
+                          data-aos="zoom-in"
                         >
                           <div className="bg-gray-300 rounded-2xl p-1 relative flex items-center justify-center cursor-pointer">
                             <img

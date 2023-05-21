@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import ActiveLink from "../components/ActiveLink";
 import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { currentUser, logout } = useAuth();
   const { displayName, photoURL } = currentUser || {};
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   // Home, All Toys, My Toys, Add A Toy, Blogs, and User profile picture.
   return (
     <>
@@ -192,7 +194,7 @@ const Navbar = () => {
               <li className="mb-1">
                 <ActiveLink
                   className="block p-4 text-sm font-semibold  hover:bg-blue-50  rounded"
-                  to="/admin/mytoys"
+                  to="/admin/myproducts"
                 >
                   My Toys
                 </ActiveLink>
@@ -220,7 +222,7 @@ const Navbar = () => {
               <div className="flex justify-center items-center gap-2">
                 <div
                   className="avatar justify-center items-center tooltip tooltip-bottom"
-                  data-tip={currentUser.displayName}
+                  data-tip={currentUser?.displayName}
                 >
                   <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                     <img src={currentUser?.photoURL} />
@@ -234,19 +236,26 @@ const Navbar = () => {
                 </button>
               </div>
             ) : (
-              <div className="pt-6">
-                <a
+              <div className="pt-6 flex gap-2 justify-center">
+                <button
                   className="block px-4 py-3 mb-3  text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl"
-                  href="#"
+                  onClick={() => {
+                    navigate("/login");
+                    setIsOpen(!isOpen);
+                  }}
                 >
                   Sign in
-                </a>
-                <a
+                </button>
+                <button
                   className="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl"
-                  href="#"
+                  to="/register"
+                  onClick={() => {
+                    navigate("/register");
+                    setIsOpen(!isOpen);
+                  }}
                 >
                   Sign Up
-                </a>
+                </button>
               </div>
             )}
             <p className="my-4 text-xs text-center text-gray-400">

@@ -9,7 +9,6 @@ import ActiveLink from "./ActiveLink";
 import { useAuth } from "../contexts/AuthContext";
 
 const SideNavigation = () => {
-  const { logout } = useAuth();
   return (
     <div className=" bg-gray-200 min-h-[85vh]  lg:flex flex-col w-60 hidden">
       <ActiveLink to="">

@@ -16,6 +16,11 @@ const SideNavigation = () => {
           <ImStatsDots /> <p>Overview</p>
         </div>
       </ActiveLink>
+      <ActiveLink to="myproducts">
+        <div className="flex items-center gap-2 border-b  px-2 py-2 text-lg font-semibold border-gray-100">
+          <FiShoppingBag /> <p>My Toys</p>
+        </div>
+      </ActiveLink>
       <ActiveLink to="allproducts">
         <div className="flex items-center gap-2 border-b  px-2 py-2 text-lg font-semibold border-gray-100">
           <BiShoppingBag /> <p>All Products</p>
@@ -44,7 +49,6 @@ const SideNavigation = () => {
       <div className="flex items-center gap-2 border-b  px-2 py-2 text-lg font-semibold border-gray-100">
         <RiContactsLine /> <p>Contact Us</p>
       </div>
-     
     </div>
   );
 };

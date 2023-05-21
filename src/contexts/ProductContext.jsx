@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Axios from "../utils/Axios";
+import { useAuth } from "./AuthContext";
 
 // Create the context
 const ProductContext = createContext();
-
 // Create the FavoriteProvider component
 export const ProductProvider = ({ children }) => {
+  const { currentUser, loading } = useAuth();
   const [categoryNames, setCategoryNames] = useState({
     loading: true,
     error: true,
@@ -20,6 +21,11 @@ export const ProductProvider = ({ children }) => {
     data: [],
   });
   const [allProducts, setAllProducts] = useState({
+    loading: true,
+    error: true,
+    data: [],
+  });
+  const [myProducts, setMyProducts] = useState({
     loading: true,
     error: true,
     data: [],
@@ -123,17 +129,50 @@ export const ProductProvider = ({ children }) => {
     doGetRequest();
   }, [allProductsQuery, allProductsLimit]);
 
+  //my product
+  useEffect(() => {
+    async function doGetRequest() {
+      setMyProducts((prev) => ({
+        ...prev,
+        loading: true,
+        error: false,
+        data: [],
+      }));
+      try {
+        let res = await Axios.get(`/toys/myproduct/${currentUser?.email}`);
+        let data = res.data;
+        setMyProducts((prev) => ({
+          ...prev,
+          loading: false,
+          error: false,
+          data,
+        }));
+      } catch (error) {
+        setMyProducts((prev) => ({
+          ...prev,
+          loading: false,
+          error: true,
+          data: [],
+        }));
+      }
+    }
+
+    doGetRequest();
+  }, [currentUser?.email]);
+
   return (
     <ProductContext.Provider
       value={{
         categoryNames,
         categoryData,
         allProducts,
+        myProducts,
         setCategoryData,
         setDataLimit,
         setSelectedCategory,
         setAllProductsLimit,
         setAllProductsQuery,
+        setMyProducts,
       }}
     >
       {children}

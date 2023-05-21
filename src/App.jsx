@@ -5,20 +5,19 @@ import { ProductProvider, useProducts } from "./contexts/ProductContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AosAnimation from "./components/AosAnimation";
-import Axios from "./utils/Axios";
 import GoToTopButton from "./components/GoToTopButton";
 
 function App() {
   return (
-    <AosAnimation>
+    <AuthProvider>
       <ProductProvider>
-        <AuthProvider>
+        <AosAnimation>
           <RouterProvider router={routes} />
           <GoToTopButton />
           <ToastContainer />
-        </AuthProvider>
+        </AosAnimation>
       </ProductProvider>
-    </AosAnimation>
+    </AuthProvider>
   );
 }
 

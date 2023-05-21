@@ -10,12 +10,18 @@ import { Link } from "react-router-dom";
 import Axios from "../utils/Axios";
 
 const MyProducts = () => {
-  const { categoryData, setDataLimit } = useProducts();
+  const { myProducts, setMyProducts, categoryData, setDataLimit } =
+    useProducts();
   const handleDelete = async (id) => {
     try {
       const response = await Axios.delete(`/toys/${id}`);
       console.log(response.data);
       //TODO: froned updated needed
+      const updateProdcut = myProducts?.data.filter((el) => el._id !== id);
+      setMyProducts((prev) => ({
+        ...prev,
+        data: updateProdcut,
+      }));
     } catch (error) {
       console.error(error);
     }
@@ -61,9 +67,9 @@ const MyProducts = () => {
 
   //render to ui
 
-  if (categoryData.loading) return <GlobalSpinner />;
-  if (categoryData.error) return <Error message="Error occur" />;
-  if (!categoryData.loading && !categoryData.error)
+  if (myProducts?.loading) return <GlobalSpinner />;
+  if (myProducts?.error) return <Error message="Error occur" />;
+  if (!myProducts?.loading && !myProducts?.error)
     return (
       <div className="overflow-x-auto">
         <table className="table w-full">
@@ -81,7 +87,7 @@ const MyProducts = () => {
             </tr>
           </thead>
           <tbody>
-            {categoryData.data.map((el, index) => (
+            {myProducts?.data.map((el, index) => (
               <tr key={el?._id}>
                 <th>{index + 1}</th>
                 <td className="overflow-hidden">

@@ -44,6 +44,7 @@ const Gallery = () => {
             className={`p-2 m-1 rounded-sm shadow-sm shadow-slate-300 ring-2 ${
               index % 2 === 0 ? "ring-purple-200" : "ring-pink-300"
             }`}
+            data-aos="fade-up"
           >
             <img className="aspect-square" src={el?.src} alt="" />
           </div>

@@ -59,7 +59,7 @@ const DealsOfTheDay = () => {
               {categoryNames.loading === false &&
                 categoryNames.error === false &&
                 categoryNames.data.map((el, index) => (
-                  <li key={index}>
+                  <li key={index} data-aos="fade-up">
                     <a>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

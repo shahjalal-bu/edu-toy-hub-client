@@ -4,7 +4,7 @@ import "aos/dist/aos.css";
 
 const AosAnimation = ({ children }) => {
   useEffect(() => {
-    AOS.init();
+    AOS.init({ delay: 300 });
   }, []);
   return children;
 };

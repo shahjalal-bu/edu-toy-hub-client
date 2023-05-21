@@ -4,6 +4,7 @@ import Axios from "../utils/Axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useProducts } from "../contexts/ProductContext";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 function AddProduct() {
   const {
     categoryNames,
@@ -13,6 +14,7 @@ function AddProduct() {
     setSelectedCategory,
     setDataLimit,
   } = useProducts();
+  const navigate = useNavigate();
   const { currentUser } = useAuth();
   //set dynamic title
   useEffect(() => {
@@ -21,7 +23,6 @@ function AddProduct() {
       document.title = "EduToysHub";
     };
   }, []);
-  console.log(currentUser);
   const {
     register,
     handleSubmit,
@@ -35,9 +36,15 @@ function AddProduct() {
         Seller: currentUser?.displayName,
         SellerEmail: currentUser?.email,
       };
+
       const response = await Axios.post("/toys", data);
       if (response.status === 200) {
         Swal.fire("Good job!", "Data Added Successfully!", "success");
+        setMyProducts((prev) => ({
+          ...prev,
+          data: [...prev.data, { _id: response.data.insertedId, ...data }],
+        }));
+        navigate("/admin/myproducts");
         reset();
       }
     } catch (error) {

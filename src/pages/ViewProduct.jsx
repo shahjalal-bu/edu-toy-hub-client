@@ -24,9 +24,6 @@ const ViewProduct = () => {
       document.title = "EduToysHub";
     };
   }, [id]);
-
-
-
   //render ui
   if (loading) return <GlobalSpinner />;
   else

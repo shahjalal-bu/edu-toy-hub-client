@@ -20,7 +20,7 @@ const RecommendedForYou = () => {
     } else {
       const res = await Swal.fire({
         title: "Are you sure?",
-        text: "You have to login to view this!",
+        text: "You have to log in first to view details",
         icon: "warning",
         confirmButtonText: "YES LOGIN",
         showCancelButton: true,
@@ -98,11 +98,6 @@ const RecommendedForYou = () => {
                               </p>
                               <p className="font-[600] text-lg">{el?.Price}</p>
                             </div>
-                            {/* <Link to={`/toy/${el?._id}`}>
-                              <button className="bg-slate-900 py-2 px-2 my-2 w-full text-white">
-                                View Details
-                              </button>
-                            </Link>{" "} */}
 
                             <button
                               className="bg-slate-900 py-2 px-2 my-2 w-full text-white"

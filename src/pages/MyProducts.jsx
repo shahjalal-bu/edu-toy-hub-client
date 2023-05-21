@@ -5,6 +5,7 @@ import Error from "../components/Error";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineLocalOffer } from "react-icons/md";
 import { CiDiscount1 } from "react-icons/ci";
+import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import Axios from "../utils/Axios";
@@ -21,6 +22,7 @@ const MyProducts = () => {
     setAllProductsLimit,
     setAllProductsQuery,
     setMyProducts,
+    setSortByPrice,
   } = useProducts();
 
   const handleDelete = async (id) => {
@@ -87,77 +89,96 @@ const MyProducts = () => {
   if (myProducts?.error) return <Error message="Error occur" />;
   if (!myProducts?.loading && !myProducts?.error)
     return (
-      <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
-            <tr>
-              <th>No.</th>
-              <th>Name</th>
-              <th>Img</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Rating</th>
-              <th>Quantity</th>
-              <th>View Details</th>
-              <th className="text-center">Function</th>
-            </tr>
-          </thead>
-          <tbody>
-            {myProducts?.data.map((el, index) => (
-              <tr key={el?._id}>
-                <th>{index + 1}</th>
-                <td className="overflow-hidden">
-                  <span className="inline-block w-40 whitespace-normal">
-                    {el?.Name}
-                  </span>
-                </td>
-                <td>
-                  <img className="w-16 h-16" src={el?.Picture} alt="img" />
-                </td>
-                <td>{el?.Category}</td>
-                <td>{el?.Price}</td>
-                <td>{el?.Rating}</td>
-                <td>{el?.Qty}</td>
-                <td>
-                  <Link to={`/toy/${el?._id}`}>
-                    <button className="btn btn-primary btn-sm mx-1">
-                      View Detail
-                    </button>
-                  </Link>
-                </td>
-                <td>
-                  <Link to={`/admin/editproduct/${el?._id}`}>
-                    <button className="btn btn-primary btn-sm mx-1">
-                      <AiOutlineEdit />
-                    </button>
-                  </Link>
-                  <button
-                    className="btn btn-error btn-sm mx-1"
-                    onClick={() => isDelete(el?._id)}
-                  >
-                    <AiOutlineDelete />
-                  </button>
-                  <button
-                    className="btn btn-success btn-sm mx-1"
-                    onClick={() => isDealsOfDay(el?._id, el?.dealsOfTheDay)}
-                  >
-                    <MdOutlineLocalOffer />
-                  </button>
-                  <button className="btn btn-accent btn-sm mx-1">
-                    <CiDiscount1 />
-                  </button>
-                </td>
+      <div>
+        <div className="flex justify-end py-5">
+          <div className="btn-group">
+            <div className="btn btn-primary cursor-default">Sort</div>
+            <button
+              className="btn btn-square"
+              onClick={() => setSortByPrice("asc")}
+            >
+              <HiSortAscending />
+            </button>
+            <button
+              className="btn btn-square"
+              onClick={() => setSortByPrice("dsc")}
+            >
+              <HiSortDescending />
+            </button>
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="table w-full">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Img</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Rating</th>
+                <th>Quantity</th>
+                <th>View Details</th>
+                <th className="text-center">Function</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="flex justify-center">
-          <button
-            className="bg-slate-900 rounded-sm py-4 px-2 my-2 w-2/6 text-white"
-            onClick={() => setDataLimit((prev) => prev + 20)}
-          >
-            Load More Data
-          </button>
+            </thead>
+            <tbody>
+              {myProducts?.data.map((el, index) => (
+                <tr key={el?._id}>
+                  <th>{index + 1}</th>
+                  <td className="overflow-hidden">
+                    <span className="inline-block w-40 whitespace-normal">
+                      {el?.Name}
+                    </span>
+                  </td>
+                  <td>
+                    <img className="w-16 h-16" src={el?.Picture} alt="img" />
+                  </td>
+                  <td>{el?.Category}</td>
+                  <td>{el?.Price}</td>
+                  <td>{el?.Rating}</td>
+                  <td>{el?.Qty}</td>
+                  <td>
+                    <Link to={`/toy/${el?._id}`}>
+                      <button className="btn btn-primary btn-sm mx-1">
+                        View Detail
+                      </button>
+                    </Link>
+                  </td>
+                  <td>
+                    <Link to={`/admin/editproduct/${el?._id}`}>
+                      <button className="btn btn-primary btn-sm mx-1">
+                        <AiOutlineEdit />
+                      </button>
+                    </Link>
+                    <button
+                      className="btn btn-error btn-sm mx-1"
+                      onClick={() => isDelete(el?._id)}
+                    >
+                      <AiOutlineDelete />
+                    </button>
+                    <button
+                      className="btn btn-success btn-sm mx-1"
+                      onClick={() => isDealsOfDay(el?._id, el?.dealsOfTheDay)}
+                    >
+                      <MdOutlineLocalOffer />
+                    </button>
+                    <button className="btn btn-accent btn-sm mx-1">
+                      <CiDiscount1 />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="flex justify-center">
+            <button
+              className="bg-slate-900 rounded-sm py-4 px-2 my-2 w-2/6 text-white"
+              onClick={() => setDataLimit((prev) => prev + 20)}
+            >
+              Load More Data
+            </button>
+          </div>
         </div>
       </div>
     );

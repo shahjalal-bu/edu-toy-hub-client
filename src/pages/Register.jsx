@@ -41,8 +41,8 @@ const Register = () => {
 
   return (
     <div className="flex items-center min-h-screen p-4 bg-gray-100 lg:justify-center">
-      <div className="flex flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row md:flex-1 lg:max-w-screen-md">
-        <div className="p-4 py-6 text-white bg-indigo-500 md:w-80 md:flex-shrink-0 md:flex md:flex-col md:items-center md:justify-evenly">
+      <div className="flex flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row md:flex-1 w-full lg:max-w-screen-md">
+        <div className="p-4 py-6 text-white bg-slate-500 md:w-80 md:flex-shrink-0 md:flex md:flex-col md:items-center md:justify-evenly">
           <div className="my-3 text-4xl font-bold tracking-wider text-center">
             <a href="#">EduToysHub</a>
           </div>
@@ -84,7 +84,7 @@ const Register = () => {
                 autoFocus={true}
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
-                className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-indigo-200"
+                className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-slate-200"
               />
             </div>
             <div className="flex flex-col space-y-1">
@@ -156,7 +156,7 @@ const Register = () => {
             <div>
               <button
                 type="submit"
-                className="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-indigo-500 rounded-md shadow hover:bg-indigo-600 focus:outline-none focus:ring-indigo-200 focus:ring-4"
+                className="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-slate-500 rounded-md shadow hover:bg-slate-600 focus:outline-none focus:ring-slate-200 focus:ring-4"
                 disabled={loading}
               >
                 Register

@@ -15,6 +15,7 @@ export const ProductProvider = ({ children }) => {
   const [dataLimit, setDataLimit] = useState(20);
   const [allProductsLimit, setAllProductsLimit] = useState(20);
   const [allProductsQuery, setAllProductsQuery] = useState("");
+  const [sortByPrice, setSortByPrice] = useState("asc");
   const [categoryData, setCategoryData] = useState({
     loading: true,
     error: true,
@@ -139,7 +140,9 @@ export const ProductProvider = ({ children }) => {
         data: [],
       }));
       try {
-        let res = await Axios.get(`/toys/myproduct/${currentUser?.email}`);
+        let res = await Axios.get(
+          `/toys/myproduct/${currentUser?.email + "?sort=" + sortByPrice}`
+        );
         let data = res.data;
         setMyProducts((prev) => ({
           ...prev,
@@ -158,7 +161,7 @@ export const ProductProvider = ({ children }) => {
     }
 
     doGetRequest();
-  }, [currentUser?.email]);
+  }, [currentUser?.email, sortByPrice]);
 
   return (
     <ProductContext.Provider
@@ -173,6 +176,7 @@ export const ProductProvider = ({ children }) => {
         setAllProductsLimit,
         setAllProductsQuery,
         setMyProducts,
+        setSortByPrice,
       }}
     >
       {children}

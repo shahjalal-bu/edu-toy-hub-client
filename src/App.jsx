@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AosAnimation from "./components/AosAnimation";
 import Axios from "./utils/Axios";
+import GoToTopButton from "./components/GoToTopButton";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <ProductProvider>
         <AuthProvider>
           <RouterProvider router={routes} />
+          <GoToTopButton />
           <ToastContainer />
         </AuthProvider>
       </ProductProvider>

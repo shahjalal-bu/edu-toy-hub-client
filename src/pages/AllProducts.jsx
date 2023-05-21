@@ -7,11 +7,22 @@ import { MdOutlineLocalOffer } from "react-icons/md";
 import { CiDiscount1 } from "react-icons/ci";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import Axios from "../utils/Axios";
 
 const AllProducts = () => {
   const { categoryData, setDataLimit } = useProducts();
-  console.log(categoryData);
-  const isDelete = async () => {
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await Axios.delete(`/toys/${id}`);
+      console.log(response.data);
+      //TODO: froned updated needed
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const isDelete = async (id) => {
     const res = await Swal.fire({
       title: "Are you sure?",
       text: "You want to delete this product?",
@@ -20,7 +31,7 @@ const AllProducts = () => {
       showCancelButton: true,
     });
     if (res.isConfirmed) {
-      //TODO:delete operation here
+      handleDelete(id);
     }
   };
   //render to ui
@@ -75,7 +86,7 @@ const AllProducts = () => {
                   </Link>
                   <button
                     className="btn btn-error btn-sm mx-1"
-                    onClick={isDelete}
+                    onClick={() => isDelete(el._id)}
                   >
                     <AiOutlineDelete />
                   </button>

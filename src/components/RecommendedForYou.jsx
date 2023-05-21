@@ -44,6 +44,7 @@ const RecommendedForYou = () => {
                         <div
                           className="flex flex-col w-[45%] sm:flex-none sm:w-[13%] bg-gray-100 rounded-2xl"
                           id="product__card"
+                          key={el._id}
                         >
                           <div className="bg-gray-300 rounded-2xl p-1 relative flex items-center justify-center cursor-pointer">
                             <img

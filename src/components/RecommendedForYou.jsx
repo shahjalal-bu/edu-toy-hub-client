@@ -5,11 +5,31 @@ import GlobalSpinner from "./GlobalSpinner";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContext";
+import { useAuth } from "../contexts/AuthContext";
+import Swal from "sweetalert2";
 const RecommendedForYou = () => {
   const { categoryNames, categoryData, setSelectedCategory, setDataLimit } =
     useProducts();
+  const { currentUser, loading } = useAuth();
+  const navigate = useNavigate();
+  const handleViewButton = async (id) => {
+    if (currentUser) {
+      navigate(`/toy/${id}`);
+    } else {
+      const res = await Swal.fire({
+        title: "Are you sure?",
+        text: "You have to login to view this!",
+        icon: "warning",
+        confirmButtonText: "YES LOGIN",
+        showCancelButton: true,
+      });
+      if (res.isConfirmed) {
+        navigate(`/toy/${id}`);
+      }
+    }
+  };
   return (
     <>
       <section className="my-10">
@@ -78,11 +98,18 @@ const RecommendedForYou = () => {
                               </p>
                               <p className="font-[600] text-lg">{el?.Price}</p>
                             </div>
-                            <Link to={`/toy/${el?._id}`}>
+                            {/* <Link to={`/toy/${el?._id}`}>
                               <button className="bg-slate-900 py-2 px-2 my-2 w-full text-white">
                                 View Details
                               </button>
-                            </Link>
+                            </Link>{" "} */}
+
+                            <button
+                              className="bg-slate-900 py-2 px-2 my-2 w-full text-white"
+                              onClick={() => handleViewButton(el?._id)}
+                            >
+                              View Details
+                            </button>
                           </div>
                         </div>
                       ))}

@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Axios from "../utils/Axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useProducts } from "../contexts/ProductContext";
 import Swal from "sweetalert2";
 function AddProduct() {
-  const { categoryData, categoryNames } = useProducts();
+  const {
+    categoryNames,
+    myProducts,
+    setMyProducts,
+    categoryData,
+    setSelectedCategory,
+    setDataLimit,
+  } = useProducts();
   const { currentUser } = useAuth();
+  //set dynamic title
+  useEffect(() => {
+    document.title = "EduToysHub | AddToy";
+    return () => {
+      document.title = "EduToysHub";
+    };
+  }, []);
   console.log(currentUser);
   const {
     register,

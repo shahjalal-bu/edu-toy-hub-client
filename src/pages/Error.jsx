@@ -2,6 +2,14 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Error = () => {
+  //set dynamic title
+  useEffect(() => {
+    document.title = "EduToysHub | Error";
+    return () => {
+      document.title = "EduToysHub";
+    };
+  }, []);
+
   return (
     <>
       <div className="bg-gray-100 flex flex-col h-screen">

@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-
 const Terms = () => {
+  //set dynamic title
+  useEffect(() => {
+    document.title = "EduToysHub | Terms";
+    return () => {
+      document.title = "EduToysHub";
+    };
+  }, []);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-6 bg-gray-100">
       <div className="max-w-md w-full bg-white p-6 rounded-lg shadow">
@@ -29,8 +36,8 @@ const Terms = () => {
           </p>
         </div>
 
-        <button className="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded" >
-         <Link to="/register"> Create Account</Link>
+        <button className="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+          <Link to="/register"> Create Account</Link>
         </button>
       </div>
     </div>

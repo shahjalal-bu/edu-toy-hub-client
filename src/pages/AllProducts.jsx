@@ -70,6 +70,13 @@ const AllProducts = () => {
   };
 
   const [searchQuery, setSearchQuery] = useState("");
+  //set dynamic title
+  useEffect(() => {
+    document.title = "EduToysHub | Alltoys";
+    return () => {
+      document.title = "EduToysHub";
+    };
+  }, []);
   //render to ui
 
   if (allProducts.loading) return <GlobalSpinner />;

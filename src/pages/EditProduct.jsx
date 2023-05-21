@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContext";
 import Axios from "../utils/Axios";
 import GlobalSpinner from "../components/GlobalSpinner";
@@ -9,9 +8,16 @@ import Swal from "sweetalert2";
 
 function EditProduct() {
   const params = useParams();
-  const { categoryData, categoryNames } = useProducts();
+  const {
+    categoryNames,
+    myProducts,
+    setMyProducts,
+    categoryData,
+    setSelectedCategory,
+    setDataLimit,
+  } = useProducts();
+
   const { currentUser } = useAuth();
-  console.log(currentUser);
   const [Name, setName] = useState("");
   const [Category, setCategory] = useState("");
   const [Picture, setPicture] = useState("");
@@ -20,13 +26,14 @@ function EditProduct() {
   const [Rating, setRating] = useState("");
   const [Description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
+  //get single item which is match with id
   useEffect(() => {
     async function doGetRequest() {
       setLoading(true);
       try {
         let res = await Axios.get(`/toys/${params.id}`);
-
         setLoading(false);
         setName(res?.data?.Name);
         setCategory(res?.data?.Category);
@@ -43,8 +50,20 @@ function EditProduct() {
 
     doGetRequest();
   }, []);
+
   const updateData = async (event) => {
     event.preventDefault();
+    const updateData = {
+      Name,
+      Category,
+      Picture,
+      Price,
+      Qty,
+      Rating,
+      Description,
+      Seller: currentUser?.displayName,
+      SellerEmail: currentUser?.email,
+    };
     try {
       if (
         Name &&
@@ -57,21 +76,28 @@ function EditProduct() {
         currentUser?.displayName &&
         currentUser?.email
       ) {
-        const response = await Axios.put(`/toys/${params.id}`, {
-          Name,
-          Category,
-          Picture,
-          Price,
-          Qty,
-          Rating,
-          Description,
-          Seller: currentUser?.displayName,
-          SellerEmail: currentUser?.email,
-        });
+        const response = await Axios.put(`/toys/${params.id}`, updateData);
         if (response.status === 200) {
-          Swal.fire("Good job!", "Data updated successfully!", "success");
+          const updatedMyProductData = myProducts?.data.map((item) => {
+            if (item._id === params.id) {
+              return { _id: params.id, ...updateData };
+            }
+            return item;
+          });
+          console.log(updatedMyProductData);
+          setMyProducts((prev) => ({
+            ...prev,
+            data: updatedMyProductData,
+          }));
+          const res = await Swal.fire(
+            "Good job!",
+            "Data updated successfully!",
+            "success"
+          );
+          if (res.isConfirmed) {
+            navigate("/admin/myproducts");
+          }
         }
-        //TODO: Perform any additional actions after a successful update
       } else {
         alert("You have to fill all field");
       }
@@ -79,7 +105,15 @@ function EditProduct() {
       console.error("Failed to update data:", error);
     }
   };
+  //set dynamic title
+  useEffect(() => {
+    document.title = "EduToysHub | Edit Product";
+    return () => {
+      document.title = "EduToysHub";
+    };
+  }, []);
 
+  //render ui
   if (loading) return <GlobalSpinner />;
   if (!loading)
     return (

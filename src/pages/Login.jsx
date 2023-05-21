@@ -12,7 +12,6 @@ const Login = () => {
   const { login, googleSignIn, githubSignIn, currentUser } = useAuth();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  console.log(location.state);
 
   const navigate = useNavigate();
   async function handleSubmit(e) {
@@ -62,16 +61,23 @@ const Login = () => {
     return <Navigate to={from} />;
   }
 
+  //set dynamic title
+  useEffect(() => {
+    document.title = "EduToysHub | Login";
+    return () => {
+      document.title = "EduToysHub";
+    };
+  }, []);
+
   return (
     <div className="flex items-center min-h-screen p-4 bg-gray-100 lg:justify-center">
       <div className="flex flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row md:flex-1 lg:max-w-screen-md">
         <div className="p-4 py-6 text-white bg-indigo-500 md:w-80 md:flex-shrink-0 md:flex md:flex-col md:items-center md:justify-evenly">
           <div className="my-3 text-4xl font-bold tracking-wider text-center">
-            <a href="#">HelloCooker</a>
+            <a href="#">EdutoyHub</a>
           </div>
           <p className="mt-6 font-normal text-center text-gray-300 md:mt-0">
-            Welcome to helloCooker, the ultimate chef hunting site! Login to
-            helloCooker and unlock a world of culinary career opportunities.
+            Welcome to EdutoyHub
           </p>
           <p className="flex flex-col items-center justify-center mt-10 text-center">
             <span>Don`t have an account?</span>

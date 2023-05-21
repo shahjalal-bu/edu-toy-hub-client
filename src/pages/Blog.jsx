@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const Blog = () => {
+  //set dynamic title
+  useEffect(() => {
+    document.title = "EduToysHub | Blog";
+    return () => {
+      document.title = "EduToysHub";
+    };
+  }, []);
   return (
     <>
       <section class="py-16">
@@ -88,7 +95,9 @@ const Blog = () => {
           </div>
           <div class="bg-white rounded-lg overflow-hidden shadow-md">
             <div class="p-6">
-              <h2 class="text-2xl font-bold">What is MongoDB aggregate and how does it work?</h2>
+              <h2 class="text-2xl font-bold">
+                What is MongoDB aggregate and how does it work?
+              </h2>
               <p class="mt-2 text-gray-600">
                 MongoDB aggregate is a powerful data aggregation framework
                 provided by MongoDB, a popular NoSQL database. It allows you to

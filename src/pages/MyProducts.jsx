@@ -10,17 +10,26 @@ import { Link } from "react-router-dom";
 import Axios from "../utils/Axios";
 
 const MyProducts = () => {
-  const { myProducts, setMyProducts, categoryData, setDataLimit } =
-    useProducts();
+  const {
+    categoryNames,
+    categoryData,
+    allProducts,
+    myProducts,
+    setCategoryData,
+    setDataLimit,
+    setSelectedCategory,
+    setAllProductsLimit,
+    setAllProductsQuery,
+    setMyProducts,
+  } = useProducts();
+
   const handleDelete = async (id) => {
     try {
       const response = await Axios.delete(`/toys/${id}`);
-      console.log(response.data);
-      //TODO: froned updated needed
-      const updateProdcut = myProducts?.data.filter((el) => el._id !== id);
+      const updateProducts = myProducts?.data.filter((el) => el._id !== id);
       setMyProducts((prev) => ({
         ...prev,
-        data: updateProdcut,
+        data: updateProducts,
       }));
     } catch (error) {
       console.error(error);
@@ -64,6 +73,13 @@ const MyProducts = () => {
       handleDealsOfTheDay(id, dealsOfTheDay);
     }
   };
+  //set dynamic title
+  useEffect(() => {
+    document.title = "EduToysHub | My toys";
+    return () => {
+      document.title = "EduToysHub";
+    };
+  }, []);
 
   //render to ui
 

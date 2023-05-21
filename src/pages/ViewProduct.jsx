@@ -14,14 +14,20 @@ const ViewProduct = () => {
         let res = await Axios.get(`/toys/${id}`);
         setData(res.data);
         setLoading(false);
+        document.title = "EduToysHub |" + res?.data?.Name;
       } catch (error) {
         console.log(error);
       }
     }
-
     doGetRequest();
+    return () => {
+      document.title = "EduToysHub";
+    };
   }, [id]);
-  console.log(data);
+
+
+
+  //render ui
   if (loading) return <GlobalSpinner />;
   else
     return (

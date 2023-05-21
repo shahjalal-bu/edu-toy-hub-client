@@ -3,10 +3,13 @@ const categoriesName = (state) => {
   const { products } = state;
   const catgorisedProduct = {};
   const result = products.forEach((el) => {
-    if (el.Category in catgorisedProduct) {
-      catgorisedProduct[el.Category] = [...catgorisedProduct[el.Category], el];
+    if (el?.Category in catgorisedProduct) {
+      catgorisedProduct[el?.Category] = [
+        ...catgorisedProduct[el?.Category],
+        el,
+      ];
     } else {
-      catgorisedProduct[el.Category] = [el];
+      catgorisedProduct[el?.Category] = [el];
     }
   });
   return catgorisedProduct;

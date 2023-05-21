@@ -1,63 +1,31 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useReducer,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import Axios from "../utils/Axios";
-// Define the initial state of favorites
-const initialState = {
-  loading: false,
-  // categoryData: {},
-  // categoryNames: {},
-  error: false,
-  cart: [],
-};
+
 // Create the context
 const ProductContext = createContext();
-//Define action types
-const ADD_PRODUCT = "ADD_PRODUCT";
-const REMOVE_PRODUCT = "REMOVE_PRODUCT";
-const ADD_TO_CART = "ADD_TO_CART";
-// Define the reducer function
-const productReducer = (state, action) => {
-  switch (action.type) {
-    case ADD_PRODUCT:
-      return {
-        ...state,
-        products: [...state.products, action.payload],
-      };
-    case REMOVE_PRODUCT:
-      return {
-        ...state,
-        products: state.products.filter((pd) => pd._id !== action.payload),
-      };
-    case ADD_TO_CART:
-      return {
-        ...state,
-        cart: [...state.cart, action.payload],
-      };
-    default:
-      return state;
-  }
-};
+
 // Create the FavoriteProvider component
 export const ProductProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(productReducer, initialState);
   const [categoryNames, setCategoryNames] = useState({
     loading: true,
     error: true,
     data: [],
   });
   const [dataLimit, setDataLimit] = useState(20);
+  const [allProductsLimit, setAllProductsLimit] = useState(20);
+  const [allProductsQuery, setAllProductsQuery] = useState("");
   const [categoryData, setCategoryData] = useState({
     loading: true,
     error: true,
     data: [],
   });
-
+  const [allProducts, setAllProducts] = useState({
+    loading: true,
+    error: true,
+    data: [],
+  });
   const [selectedCategory, setSelectedCategory] = useState("All");
+
   useEffect(() => {
     async function doGetRequest() {
       setCategoryNames((prev) => ({
@@ -120,24 +88,52 @@ export const ProductProvider = ({ children }) => {
     doGetRequest();
   }, [selectedCategory, dataLimit]);
 
-  //define action
-  const addProduct = (product) => {
-    dispatch({ type: ADD_PRODUCT, payload: product });
-  };
+  //all product
+  useEffect(() => {
+    async function doGetRequest() {
+      setAllProducts((prev) => ({
+        ...prev,
+        loading: true,
+        error: false,
+        data: [],
+      }));
+      try {
+        let res = await Axios.get(
+          `/toys?limit=${allProductsLimit}${
+            allProductsQuery ? "&q=" + allProductsQuery : null
+          }`
+        );
+        let data = res.data;
+        setAllProducts((prev) => ({
+          ...prev,
+          loading: false,
+          error: false,
+          data,
+        }));
+      } catch (error) {
+        setAllProducts((prev) => ({
+          ...prev,
+          loading: false,
+          error: true,
+          data: [],
+        }));
+      }
+    }
 
-  const removeProduct = (id) => {
-    dispatch({ type: REMOVE_PRODUCT, payload: id });
-  };
+    doGetRequest();
+  }, [allProductsQuery, allProductsLimit]);
 
   return (
     <ProductContext.Provider
       value={{
-        ...state,
         categoryNames,
         categoryData,
+        allProducts,
         setCategoryData,
         setDataLimit,
         setSelectedCategory,
+        setAllProductsLimit,
+        setAllProductsQuery,
       }}
     >
       {children}

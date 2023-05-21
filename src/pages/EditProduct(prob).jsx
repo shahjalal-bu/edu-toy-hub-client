@@ -6,7 +6,7 @@ import { useProducts } from "../contexts/ProductContext";
 function EditProduct() {
   const params = useParams();
   const { categoryData, categoryNames } = useProducts();
-  const matechProduct = categoryData?.data.find((el) => el._id === params.id);
+  const matechProduct = categoryData?.data.find((el) => el?._id === params.id);
   const {
     register,
     handleSubmit,

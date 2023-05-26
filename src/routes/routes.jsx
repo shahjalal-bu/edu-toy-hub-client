@@ -17,6 +17,7 @@ import DealsProduct from "../pages/DealsProduct";
 import DiscountProduct from "../pages/DiscountProduct";
 import MyProducts from "../pages/MyProducts";
 import ViewProduct from "../pages/ViewProduct";
+import EditProductproblem from "../pages/EditProductproblem";
 
 const routes = createBrowserRouter([
   {
@@ -60,8 +61,8 @@ const routes = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        path: "",
-        element: <OverView />,
+        path: "overview",
+        element: <h1>This is overview</h1>,
       },
       {
         path: "myproducts",
@@ -76,14 +77,6 @@ const routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AddProduct />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "editproduct",
-        element: (
-          <PrivateRoute>
-            <EditProduct />
           </PrivateRoute>
         ),
       },
@@ -105,7 +98,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "editproduct/:id",
-        element: <EditProduct />,
+        element: <EditProductproblem />,
       },
     ],
   },

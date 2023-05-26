@@ -13,6 +13,7 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
 } from "firebase/auth";
+import Axios from "../utils/Axios";
 
 const AuthContext = React.createContext();
 
@@ -28,6 +29,11 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
+      if (user?.email) {
+        Axios.post("/jwt", { email: user?.email }).then((res) =>
+          localStorage.setItem("toy-access-token", res.data.token)
+        );
+      }
     });
     return unsubscribe;
   });

@@ -15,6 +15,8 @@ function EditProduct() {
     categoryData,
     setSelectedCategory,
     setDataLimit,
+    allProducts,
+    setAllProducts,
   } = useProducts();
 
   const { currentUser } = useAuth();
@@ -42,7 +44,6 @@ function EditProduct() {
         setQty(res?.data?.Qty);
         setRating(res?.data?.Rating);
         setDescription(res?.data?.Description);
-        console.log(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -84,10 +85,20 @@ function EditProduct() {
             }
             return item;
           });
+          const updatedAllProductData = allProducts?.data.map((item) => {
+            if (item._id === params.id) {
+              return { _id: params.id, ...updateData };
+            }
+            return item;
+          });
           console.log(updatedMyProductData);
           setMyProducts((prev) => ({
             ...prev,
             data: updatedMyProductData,
+          }));
+          setAllProducts((prev) => ({
+            ...prev,
+            data: updatedAllProductData,
           }));
           const res = await Swal.fire(
             "Good job!",
@@ -95,7 +106,8 @@ function EditProduct() {
             "success"
           );
           if (res.isConfirmed) {
-            navigate("/admin/myproducts");
+            // navigate("/admin/myproducts");
+            navigate("/admin/allproducts");
           }
         }
       } else {

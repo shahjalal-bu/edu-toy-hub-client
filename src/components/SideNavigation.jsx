@@ -11,7 +11,7 @@ import { useAuth } from "../contexts/AuthContext";
 const SideNavigation = () => {
   return (
     <div className=" bg-gray-200 min-h-[85vh]  lg:flex flex-col w-60 hidden">
-      <ActiveLink to="">
+      <ActiveLink to="overview">
         <div className="flex items-center gap-2 border-b  px-2 py-2 text-lg font-semibold border-gray-100">
           <ImStatsDots /> <p>Overview</p>
         </div>

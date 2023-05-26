@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContext";
 
-function EditProduct() {
+function EditProductproblem() {
   const params = useParams();
   const { categoryData, categoryNames } = useProducts();
   const matechProduct = categoryData?.data.find((el) => el?._id === params.id);
@@ -13,9 +13,6 @@ function EditProduct() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [picture, setPicture] = useState("");
@@ -32,6 +29,12 @@ function EditProduct() {
     setRating(matechProduct?.Rating);
     setDescription(matechProduct?.Description);
   }, []);
+
+  //handle submit
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="container mx-auto px-5 sm:px-20">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap -mx-2">
@@ -89,7 +92,11 @@ function EditProduct() {
           >
             <option value="">Select category</option>
             {!categoryNames.loading &&
-              categoryNames.data.map((el) => <option value={el}>{el}</option>)}
+              categoryNames.data.map((el, index) => (
+                <option key={index} value={el}>
+                  {el}
+                </option>
+              ))}
           </select>
           {errors.Category && (
             <span className="text-red-500">Category is required</span>
@@ -182,4 +189,4 @@ function EditProduct() {
   );
 }
 
-export default EditProduct;
+export default EditProductproblem;

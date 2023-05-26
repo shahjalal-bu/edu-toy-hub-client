@@ -131,7 +131,7 @@ const AllProducts = () => {
                 <th>Rating</th>
                 <th>Quantity</th>
                 <th>View</th>
-                {/* <th className="text-center">Function</th> */}
+                <th className="text-center">Function</th>
               </tr>
             </thead>
             <tbody>
@@ -147,7 +147,7 @@ const AllProducts = () => {
                     <img className="w-20 h-16" src={el?.Picture} alt="img" />
                   </td>
                   <td>{el?.Seller}</td>
-                  <td>{el?.Category}</td>
+                  <td className="inline-block w-16 whitespace-normal">{el?.Category}</td>
                   <td>{el?.Price}</td>
                   <td>{el?.Rating}</td>
                   <td>{el?.Qty}</td>
@@ -158,13 +158,13 @@ const AllProducts = () => {
                       </button>
                     </Link>
                   </td>
-                  {/* <td>
+                  <td>
                     <Link to={`/admin/editproduct/${el?._id}`}>
                       <button className="btn btn-primary btn-sm mx-1">
                         <AiOutlineEdit />
                       </button>
                     </Link>
-                    <button
+                    {/* <button
                       className="btn btn-error btn-sm mx-1"
                       onClick={() => isDelete(el?._id)}
                     >
@@ -178,8 +178,8 @@ const AllProducts = () => {
                     </button>
                     <button className="btn btn-accent btn-sm mx-1">
                       <CiDiscount1 />
-                    </button>
-                  </td> */}
+                    </button> */}
+                  </td>
                 </tr>
               ))}
             </tbody>

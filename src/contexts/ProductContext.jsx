@@ -141,7 +141,14 @@ export const ProductProvider = ({ children }) => {
       }));
       try {
         let res = await Axios.get(
-          `/toys/myproduct/${currentUser?.email + "?sort=" + sortByPrice}`
+          `/toys/myproduct/${currentUser?.email + "?sort=" + sortByPrice}`,
+          {
+            headers: {
+              Authorization: `token ${localStorage.getItem(
+                "toy-access-token"
+              )}`,
+            },
+          }
         );
         let data = res.data;
         setMyProducts((prev) => ({
@@ -151,6 +158,7 @@ export const ProductProvider = ({ children }) => {
           data,
         }));
       } catch (error) {
+        console.log(error);
         setMyProducts((prev) => ({
           ...prev,
           loading: false,
@@ -175,6 +183,7 @@ export const ProductProvider = ({ children }) => {
         setSelectedCategory,
         setAllProductsLimit,
         setAllProductsQuery,
+        setAllProducts,
         setMyProducts,
         setSortByPrice,
       }}

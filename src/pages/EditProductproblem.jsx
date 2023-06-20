@@ -2,33 +2,50 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useProducts } from "../contexts/ProductContext";
+import Axios from "../utils/Axios";
 
 function EditProductproblem() {
   const params = useParams();
   const { categoryData, categoryNames } = useProducts();
   const matechProduct = categoryData?.data.find((el) => el?._id === params.id);
+
+  //get single item which is match with id
+  useEffect(() => {
+    async function doGetRequest() {
+      setLoading(true);
+      try {
+        let res = await Axios.get(`/toys/${params.id}`);
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    doGetRequest();
+  }, []);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
-  const [picture, setPicture] = useState("");
-  const [price, setPrice] = useState("");
-  const [qty, setQty] = useState("");
-  const [rating, setRating] = useState("");
-  const [description, setDescription] = useState("");
+  // const [name, setName] = useState("");
+  // const [category, setCategory] = useState("");
+  // const [picture, setPicture] = useState("");
+  // const [price, setPrice] = useState("");
+  // const [qty, setQty] = useState("");
+  // const [rating, setRating] = useState("");
+  // const [description, setDescription] = useState("");
 
-  useEffect(() => {
-    setName(matechProduct?.Name);
-    setCategory(matechProduct?.Category);
-    setPicture(matechProduct?.Picture);
-    setPrice(matechProduct?.Price);
-    setRating(matechProduct?.Rating);
-    setDescription(matechProduct?.Description);
-  }, []);
+  // useEffect(() => {
+  //   setName(matechProduct?.Name);
+  //   setCategory(matechProduct?.Category);
+  //   setPicture(matechProduct?.Picture);
+  //   setPrice(matechProduct?.Price);
+  //   setRating(matechProduct?.Rating);
+  //   setDescription(matechProduct?.Description);
+  // }, []);
 
   //handle submit
   const onSubmit = (data) => {
@@ -49,8 +66,8 @@ function EditProductproblem() {
             id="Name"
             {...register("Name", { required: true })}
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            // value={name}
+            // onChange={(e) => setName(e.target.value)}
             className="w-full h-10 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
           {errors.Name && (
@@ -68,8 +85,8 @@ function EditProductproblem() {
             id="Picture"
             {...register("Picture", { required: true })}
             type="text"
-            value={picture}
-            onChange={(e) => setPhoto(e.target.value)}
+            // value={picture}
+            // onChange={(e) => setPhoto(e.target.value)}
             className="w-full h-10 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
           {errors.Picture && (
@@ -86,8 +103,8 @@ function EditProductproblem() {
           <select
             id="Category"
             {...register("Category", { required: true })}
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            // value={category}
+            // onChange={(e) => setCategory(e.target.value)}
             className="w-full h-10 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           >
             <option value="">Select category</option>
@@ -113,8 +130,8 @@ function EditProductproblem() {
             id="Price"
             {...register("Price", { required: true })}
             type="text"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            // value={price}
+            // onChange={(e) => setPrice(e.target.value)}
             className="w-full h-10 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
           {errors.Price && (
@@ -132,8 +149,8 @@ function EditProductproblem() {
             id="Qty"
             {...register("Qty", { required: true })}
             type="text"
-            value={qty}
-            onChange={(e) => setQty(e.target.value)}
+            // value={qty}
+            // onChange={(e) => setQty(e.target.value)}
             className="w-full h-10 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
           {errors.Qty && (
@@ -151,8 +168,8 @@ function EditProductproblem() {
             id="Rating"
             {...register("Rating", { required: true })}
             type="text"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
+            // value={rating}
+            // onChange={(e) => setRating(e.target.value)}
             className="w-full h-10 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
           {errors.Rating && (
@@ -170,8 +187,8 @@ function EditProductproblem() {
             id="Description"
             {...register("Description", { required: true })}
             rows={4}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            // value={description}
+            // onChange={(e) => setDescription(e.target.value)}
             className="w-full h-24 bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           ></textarea>
           {errors.Description && (

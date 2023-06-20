@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import ActiveLink from "../components/ActiveLink";
 import logo from "../assets/logo.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { currentUser, logout } = useAuth();
@@ -33,7 +33,7 @@ const Navbar = () => {
         </div>
         <ul className="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2  lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
           <li>
-            <ActiveLink to="/">Home</ActiveLink>
+            <a href="/#sub">Home</a>
           </li>
           <li className="text-gray-300">
             <svg

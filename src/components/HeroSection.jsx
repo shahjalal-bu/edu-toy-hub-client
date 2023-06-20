@@ -1,10 +1,34 @@
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper";
+import slider1 from "../assets/slider1.png";
+import slider2 from "../assets/slider2.png";
+import slider3 from "../assets/slider3.png";
 
 const HeroSection = () => {
   return (
     <>
       <div className="container mx-auto px-5 sm:px-20">
-        <div className="carousel w-full">
+        <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
+          <SwiperSlide>
+            <div className="overflow-hidden rounded-lg ">
+              <img className="w-full" src={slider3} />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="overflow-hidden rounded-lg">
+              <img className="w-full" src={slider2} />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="overflow-hidden rounded-lg">
+              <img className="w-full" src={slider1} />
+            </div>
+          </SwiperSlide>
+        </Swiper>
+        {/* <div className="carousel w-full">
           <div
             id="slide1"
             className="carousel-item relative w-full lg:h-[400px]"
@@ -57,7 +81,7 @@ const HeroSection = () => {
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

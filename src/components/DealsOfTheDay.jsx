@@ -84,7 +84,7 @@ const DealsOfTheDay = () => {
         data: [],
       }));
       try {
-        let res = await Axios.get("/toys/deals");
+        let res = await Axios.get("/deals");
         let data = res.data;
         setDealsData((prev) => ({
           ...prev,

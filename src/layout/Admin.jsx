@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet, useNavigation } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useNavigation } from "react-router-dom";
 import Footer from "./Footer";
 import GlobalSpinner from "../components/GlobalSpinner";
 import SideNavigation from "../components/SideNavigation";
@@ -8,6 +8,9 @@ import Navbar from "./Navbar";
 const Admin = () => {
   //loading stage handle
   const navigation = useNavigation();
+  const location = useLocation();
+  if ((location.pathname === "/admin"))
+    return <Navigate to="/admin/overview" replace={true} />;
   return (
     <div className="px-2">
       {navigation.state === "loading" && <GlobalSpinner />}

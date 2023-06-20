@@ -2,3 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --hue: 223;
+  --bg: hsl(var(--hue), 10%, 90%);
+  --fg: hsl(var(--hue), 10%, 10%);
+}
+
+

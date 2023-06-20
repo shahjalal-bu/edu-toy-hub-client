@@ -12,7 +12,7 @@ const Subscribe = () => {
   };
 
   return (
-    <div className="py-4 bg-gray-100">
+    <div className="py-4 bg-gray-100" id="sub">
       <div className="container mx-auto">
         <div className="flex items-center justify-center">
           <div className="max-w-md w-full">
